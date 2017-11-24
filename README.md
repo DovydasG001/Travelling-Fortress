@@ -17,7 +17,8 @@ Graphics:
 
 Programming:
 1. Health bars
+2. Weapons
 2. Game loop
 2.1. Draw tanks
 2.2. Draw health bar
-2.3. 
+2.3. Draw weapons

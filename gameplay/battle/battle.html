@@ -4,15 +4,25 @@
     <meta charset="utf-8" />
     <title>Traveling Fortress</title>
 	<style>
-    	canvas { background: #eee; display: block; margin: 0 auto; }
+    	canvas { background: #eee; display: block; margin: 0 auto;}
     </style>
 </head>
 <body>
 
-<canvas id="myCanvas" width="1024" height="768"></canvas>
+<div style="margin: 0 auto; width: 1024px">
+	<canvas style = "position: absolute;" id="myCanvas" width="1024" height="768"></canvas>
+	<canvas style = "position: absolute;" id="hpGUI" width="1024" height="100"></canvas>
+</div>
+
 
 
 <script src="./hp.js"></script>
+<script>
+	refreshHp();
+	hitCount++;
+	refreshHp();
+</script>
+
 
 </body>
 </html>

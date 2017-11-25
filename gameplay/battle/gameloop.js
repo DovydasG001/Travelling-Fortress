@@ -39,8 +39,9 @@ function mouseMoveEvent(event, canvas, mainTank, enemyTank) {
   };
 
   var x0 = 237, y0 = 708, x1 = 337, y1 = 768;
-
-  let mouseIsOn = checkMousePosition(mousePosition, mainTank, enemyTank);
+  console.log(document);
+  mouseIsOn = checkMousePosition(mousePosition, mainTank, enemyTank);
+  console.log(mouseIsOn);
   if (mouseIsOn == "weapons") {
     isOnWeapons = true;
   } else if (mouseIsOn == "driverRoom" || mouseIsOn == "engineRoom" || mouseIsOn == "gunRoom") {
@@ -98,10 +99,12 @@ window.onload = () => {
   explosionAnimation.src = '../../graphics/explosion.png';
   var enemyTankSheet = new Image(270, 148);
   enemyTankSheet.src = '../../graphics/enemyTank1.png';
+  var crosshair = new Image(300, 300);
+  crosshair.src = '../../graphics/crosshair.gif';
   var explosions = [];
   var lasers = [];
   var imagesLoaded = 0;
-  var imageQuantity = 3;
+  var imageQuantity = 4;
   shootAnimation.onload = () => {
 		imagesLoaded++;
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
@@ -117,6 +120,12 @@ window.onload = () => {
 		}
   }
   explosionAnimation.onload = () => {
+	imagesLoaded++;
+	if (imagesLoaded == imageQuantity){
+		startGame();
+	}
+  }
+  crosshair.onload = () => {
 	imagesLoaded++;
 	if (imagesLoaded == imageQuantity){
 		startGame();
@@ -144,6 +153,22 @@ window.onload = () => {
 		  weaponsGUI.loadWeapon();
 		  console.log("loading bar: " + weaponsGUI.loadingBar);
 		}
+		//draw target
+		
+		switch(mouseIsOn){
+			case "engineRoom":
+				ctx.drawImage(crosshair, enemyTank.position.x + 245, enemyTank.position.y + 165, 100, 100);
+				break;
+			case "driverRoom":
+				ctx.drawImage(crosshair, enemyTank.driverRoom.x0+35, enemyTank.driverRoom.y0-25, 100, 100);
+				break;
+			case "gunRoom":
+				ctx.drawImage(crosshair, enemyTank.gunRoom.x0 - 25, enemyTank.gunRoom.y0, 100, 100);
+				break;
+			default:
+			
+		}
+		
 		//enemy shoot
 		
 		if(enemyShootFrames >=110){

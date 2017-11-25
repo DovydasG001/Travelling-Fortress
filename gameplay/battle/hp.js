@@ -1,5 +1,5 @@
 class hpGUI {
-	constructor(ctx, canvas) {
+	constructor(canvas, ctx) {
 		this.ctx = ctx;
 		this.canvas = canvas;
 		this.hitCount = 0;

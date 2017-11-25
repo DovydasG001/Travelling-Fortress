@@ -55,7 +55,7 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers)
   canvas.addEventListener(
     'click',
     (event) => {
-      if (isOnWeapons && !weaponsSelected) {
+      if (isOnWeapons && !weaponsSelected && weaponsGUI.loadingBar > 0.98) {
         weaponsSelected = true;
         weaponsGUI.isWeaponActive = true;
       } else if (isOnWeapons && weaponsSelected) {
@@ -68,6 +68,7 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers)
 		    cannonSound.play();
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
+        weaponsGUI.depleteWeapon();
       }
 
     }
@@ -137,6 +138,11 @@ window.onload = () => {
 
 		// draw weapons
     weaponsGUI.drawWeapon();
+    if (weaponsGUI.loadingBar < 1) {
+      weaponsGUI.loadWeapon();
+      console.log("loading bar: " + weaponsGUI.loadingBar);
+    }
+
 	  }, 1000 / 60);
 	}
 	  

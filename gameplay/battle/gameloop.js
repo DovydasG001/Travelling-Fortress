@@ -128,16 +128,19 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
         // change loading speed
         weaponsGUI.setLoadSpeed('powered');
 		mainTank.engineRoom.powered = false;
+		mainTank.driverRoom.powered = false;
 		poweredFrames = 0;
       } else if (isOnE) {
         powerBar.setPoweredRoom("E");
         weaponsGUI.setLoadSpeed('unpowered');
 		mainTank.engineRoom.powered = true;
+		mainTank.driverRoom.powered = false;
 		poweredFrames = 0;
       } else if (isOnD) {
         powerBar.setPoweredRoom("D");
         weaponsGUI.setLoadSpeed('unpowered');
 		mainTank.engineRoom.powered = false;
+		mainTank.driverRoom.powered = true;
 		poweredFrames = 0;
       }
 
@@ -236,7 +239,11 @@ window.onload = () => {
 		//enemy shoot
 		if(enemyShootFrames >=110 && enemyTank.gunRoom.hp>0){
 			enemyShootFrames = 0;
-			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 100, 180));
+			let poweredDodging = 0;
+			if (mainTank.driverRoom.powered && mainTank.driverRoom.hp>0){
+				poweredDodging = 30;
+			}
+			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 100+poweredDodging, 180));
 			enemyTank.shoot = true;
 			var cannonSound = new Audio('../../music/Cannon+3.mp3')
 			cannonSound.play();

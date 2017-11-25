@@ -69,7 +69,6 @@ function loop() {
 
   // draw tank
   mainTank.drawTank();
-  console.log(lasers);
   for(var laser in lasers){
 	console.log(laser);
 	lasers[laser].drawLaser();
@@ -96,7 +95,6 @@ window.onload = () => {
   var lasers = [new Laser(canvas, ctx, 560, 300, 90, 0)];
   addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers);
   canvas.addEventListener("click", function( event ) {
-		console.log("A");
 		lasers.push(new Laser(canvas, ctx, 560, 300, 90, 0));
 	});
   shootAnimation.onload = function(){
@@ -108,8 +106,14 @@ window.onload = () => {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// draw tank
-		
-	 // window.setInterval(loop(canvas, ctx, hitpointsGUI, mainTank), 1000 / 60);
+		mainTank.drawTank();
+		for(var i in lasers){
+			lasers[i].drawLaser();
+			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768){
+				lasers.splice(i, 1);
+			}
+			
+		}
 
 		// draw enemy tank
 

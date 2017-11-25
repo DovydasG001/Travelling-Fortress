@@ -70,15 +70,14 @@ function addControllers(ctx, canvas) {
   );
 }
 
-function loop() {
-  const canvas = document.getElementById('canvas');
-  const ctx = canvas.getContext('2d');
+function loop(canvas, ctx, hitpointsGUI) {
+
   // clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   // draw tank
   // draw enemy tank
   // draw hp bar
-  var hitpointsGUI = new hpGUI(ctx, canvas);
+
   // draw hp
 
   hitpointsGUI.refreshHp();
@@ -86,7 +85,10 @@ function loop() {
 }
 
 window.onload = () => {
-  window.setInterval(loop, 1000 / 60);
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  var hitpointsGUI = new hpGUI(ctx, canvas);
+  window.setInterval(loop(canvas, ctx, hitpointsGUI), 1000 / 60);
 
 
   // // draw background and initialize listeners // probably need to create another canvas for events

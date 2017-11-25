@@ -63,7 +63,7 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers)
         weaponsGUI.isWeaponActive = false;
       } else if (isOnEnemy && weaponsSelected) {
         // Call enemy attack functionfunction()
-        lasers.push(new Laser(canvas, ctx, 560, 300, 90, 0));
+        lasers.push(new Laser(canvas, ctx, 560, 200, 90, 0));
 		    mainTank.shoot = true;
 		    cannonSound.play();
         weaponsSelected = false;

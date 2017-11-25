@@ -4,6 +4,7 @@ class wpGUI {
     this.ctx = ctx;
     this.isWeaponActive = false;
     this.loadingBar = 0;
+    this.loadSpeed = 0.01;
     this.weaponsPosition = {
       x0: 237,
       y0: 708,
@@ -12,8 +13,17 @@ class wpGUI {
     };
   }
 
+  // Sets the speed of reloading
+  setLoadSpeed(setting) {
+    if (setting == 'powered') {
+      this.loadSpeed = 0.02;
+    } else if (setting == 'unpowered') {
+      this.loadSpeed = 0.01;
+    }
+  }
+
   loadWeapon() {
-    this.loadingBar += 0.01;
+    this.loadingBar += this.loadSpeed;
   }
 
   depleteWeapon() {
@@ -21,9 +31,6 @@ class wpGUI {
   }
 
   drawWeapon() {
-    if (this.loadingBar > 0.98) {
-      this.isWeaponActive = true;
-    }
     if (this.isWeaponActive) {
       this.setActive();
     } else {

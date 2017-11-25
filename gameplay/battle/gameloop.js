@@ -69,7 +69,7 @@ function mouseMoveEvent(event, canvas, mainTank, enemyTank) {
   };
 
   mouseIsOn = checkMousePosition(mousePosition, mainTank, enemyTank);
-  
+
   switch (mouseIsOn){
 	case "weapons":
 		isOnWeapons = true;
@@ -126,12 +126,13 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
       } else if (isOnW) {
         powerBar.setPoweredRoom("W");
         // change loading speed
+        weaponsGUI.setLoadSpeed('powered');
       } else if (isOnE) {
         powerBar.setPoweredRoom("E");
-
+        weaponsGUI.setLoadSpeed('unpowered');
       } else if (isOnD) {
         powerBar.setPoweredRoom("D");
-
+        weaponsGUI.setLoadSpeed('unpowered');
       }
 
     }

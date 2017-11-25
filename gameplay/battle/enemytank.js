@@ -12,6 +12,24 @@ class EnemyTank{
 			x1: 994,
 			y1: 636
 		};
+		this.target = {
+			config1: {
+				rotation: 10,
+				angle: 45,
+				cooldown: 1,
+			},
+			config2: {
+				rotation: 15,
+				angle: 90,
+				cooldown: 1.5,
+			},
+			config3: {
+				rotation: 40,
+				angle: 25,
+				cooldown: 1.25,
+			}
+		},
+		this.currentTarget = 'config1';
 		this.gunPosition = {
 			x: this.position.x + 45,
 			y: this.position.y + 240 ,

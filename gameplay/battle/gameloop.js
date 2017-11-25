@@ -114,7 +114,7 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
       } else if (isOnWeapons && weaponsSelected) {
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
-      } else if (isOnEnemy && weaponsSelected) {
+      } else if (isOnEnemy && weaponsSelected && mainTank.gunRoom.hp > 0) {
         // Call enemy attack functionfunction()
         lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, mainTank.target[mainTank.currentTarget].angle, mainTank.target[mainTank.currentTarget].rotation));
 		    mainTank.shoot = true;
@@ -127,12 +127,18 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
         powerBar.setPoweredRoom("W");
         // change loading speed
         weaponsGUI.setLoadSpeed('powered');
+		mainTank.engineRoom.powered = false;
+		poweredFrames = 0;
       } else if (isOnE) {
         powerBar.setPoweredRoom("E");
         weaponsGUI.setLoadSpeed('unpowered');
+		mainTank.engineRoom.powered = true;
+		poweredFrames = 0;
       } else if (isOnD) {
         powerBar.setPoweredRoom("D");
         weaponsGUI.setLoadSpeed('unpowered');
+		mainTank.engineRoom.powered = false;
+		poweredFrames = 0;
       }
 
     }
@@ -190,6 +196,7 @@ window.onload = () => {
 	var startGame = () => {
 		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, enemyTank, powerBar);
 		var enemyShootFrames = 0;
+		var poweredFrames = 0;
 		window.setInterval(() => {
 		// clear canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -234,12 +241,38 @@ window.onload = () => {
 			var cannonSound = new Audio('../../music/Cannon+3.mp3')
 			cannonSound.play();
 		}
+		if(poweredFrames >= 440 && mainTank.engineRoom.hp > 0){
+			poweredFrames = 0;
+			if(mainTank.engineRoom.powered){
+				let rooms = [mainTank.driverRoom.hp, mainTank.gunRoom.hp, mainTank.engineRoom.hp];
+				switch (rooms.indexOf(Math.min(mainTank.driverRoom.hp, mainTank.gunRoom.hp, mainTank.engineRoom.hp))){
+					case 0:
+						if (mainTank.driverRoom.hp < 3){
+							mainTank.driverRoom.hp++;
+						}
+						break;
+					case 1:
+						if (mainTank.gunRoom.hp < 3){
+							mainTank.gunRoom.hp++;
+						}
+						break;
+					case 2:
+						if (mainTank.engineRoom.hp < 3){
+							mainTank.engineRoom.hp++;
+						}
+						break;
+					default:
+				}
+			}
+			
+		}
+		
 		//draw lasers
 		for(var i in lasers){
 			lasers[i].drawLaser();
-			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768 || lasers[i].lineStart.x < 0 || lasers[i].lineStart.y < 0){
+			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768 || lasers[i].lineStart.x < 0 || lasers[i].lineStart.y < 0){ //checks bounds
 				lasers.splice(i, 1);
-			} else if (enemyTank.gunRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
+			} else if (enemyTank.gunRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){ //checks enemy
 				hitpointsGUI.enemyHitCount++;
 				enemyTank.gunRoom.hp--;
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
@@ -259,11 +292,33 @@ window.onload = () => {
 				enemyTank.engineRoom.hp--;
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 				lasers.splice(i, 1);
-			} else if(lasers[i].checkIfCollidesWithPlayer(mainTank.position)){
+			} else if(mainTank.gunRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){  //check player
 				hitpointsGUI.hitCount++;
+				if (mainTank.gunRoom.hp > 0){
+					mainTank.gunRoom.hp--;
+				}
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 				lasers.splice(i, 1);
-			}
+			} else if (mainTank.driverRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
+				hitpointsGUI.hitCount++;
+				if (mainTank.driverRoom.hp > 0){
+					mainTank.driverRoom.hp--;
+				}
+				if(mainTank.driverRoom.hp <=0){
+					enemyTank.target.config1.angle = 10;
+					enemyTank.target.config2.angle = 10;
+					enemyTank.target.config3.angle = 10;
+				}
+				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+				lasers.splice(i, 1);
+			} else if (mainTank.engineRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
+				hitpointsGUI.hitCount++;
+				if (mainTank.engineRoom.hp > 0){
+					mainTank.engineRoom.hp--;
+				}
+				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+				lasers.splice(i, 1);
+			} 
 		}
 		//draw exsplosions
 		for(var i in explosions){
@@ -274,6 +329,7 @@ window.onload = () => {
 		}
 
 		enemyShootFrames++;
+		poweredFrames++;
 
 	  }, 1000 / 60);
 	}

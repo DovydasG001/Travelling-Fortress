@@ -35,6 +35,40 @@ class MainTank{
 			}
 		},
 		this.currentTarget = 'config1';
+		this.engineRoom = {
+			hp: 3,
+			powered: true,
+			x0: (this.position.x + 60) * this.resizeRatio,
+			y0: (this.position.y + 110) * this.resizeRatio,
+			x1: (this.position.x + 375) * this.resizeRatio,
+			y1: (this.position.y + 495) * this.resizeRatio,
+			collides: (x, y) => {
+				return x >= this.engineRoom.x0 && y>=this.engineRoom.y0 && x<=this.engineRoom.x1 && y<=this.engineRoom.y1;
+			}
+		};
+		this.driverRoom = {
+			hp: 3,
+			powered: false,
+			x0: (this.position.x + 10) * this.resizeRatio,
+			y0: (this.position.y + 485) * this.resizeRatio,
+			x1: (this.position.x + 430) * this.resizeRatio,
+			y1: (this.position.y + 635) * this.resizeRatio,
+			collides: (x, y) => {
+				return (x >= this.driverRoom.x0 && y>=this.driverRoom.y0 && x<=this.driverRoom.x1 && y<=this.driverRoom.y1);
+			}
+		};
+		
+		this.gunRoom = {
+			hp: 3,
+			x0: (this.position.x + 220) * this.resizeRatio,
+			y0: (this.position.y + 88) * this.resizeRatio,
+			x1: (this.position.x + 380) * this.resizeRatio,
+			y1: (this.position.y + 330) * this.resizeRatio,
+			collides: (x, y) => {
+				return (x >= this.gunRoom.x0 && y>=this.gunRoom.y0 && x<=this.gunRoom.x1 && y<=this.gunRoom.y1);
+			}
+			
+		};
 	}
 
 	drawTank(){

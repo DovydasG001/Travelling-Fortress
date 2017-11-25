@@ -34,17 +34,7 @@ function mouseMoveEvent(event, canvas) {
   }
 }
 
-function weaponInactive(ctx, canvas) {
-  ctx.fillStyle = 'red';
-  ctx.fillRect(weaponsPosition.x0, weaponsPosition.y0, 120, 60);
-}
-
-function weaponActive(ctx, canvas) {
-  ctx.fillStyle = 'green';
-  ctx.fillRect(weaponsPosition.x0, weaponsPosition.y0, 120, 60);
-}
-
-function addControllers(ctx, canvas) {
+function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI) {
   canvas.addEventListener(
     'mousemove',
     (event) => {
@@ -70,25 +60,29 @@ function addControllers(ctx, canvas) {
   );
 }
 
-function loop(canvas, ctx, hitpointsGUI) {
+function loop(canvas, ctx, hitpointsGUI, weaponsGUI) {
 
   // clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   // draw tank
+
   // draw enemy tank
-  // draw hp bar
 
   // draw hp
-
   hitpointsGUI.refreshHp();
+
   // draw weapons
+  weaponsGUI.drawWeapon();
+
 }
 
 window.onload = () => {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
-  var hitpointsGUI = new hpGUI(ctx, canvas);
-  window.setInterval(loop(canvas, ctx, hitpointsGUI), 1000 / 60);
+  var hitpointsGUI = new hpGUI(canvas, ctx);
+  var weaponsGUI = new wpGUI(canvas, ctx);
+  window.setInterval(loop(canvas, ctx, hitpointsGUI, weaponsGUI), 1000 / 60);
 
 
   // // draw background and initialize listeners // probably need to create another canvas for events

@@ -1,4 +1,4 @@
-
+var number = 0;
 var isOnWeapons = false;
 var isOnEnemy = false;
 var weaponsSelected = false;
@@ -47,21 +47,24 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI) {
     (event) => {
       if (isOnWeapons && !weaponsSelected) {
         weaponsSelected = true;
-        weaponActive(ctx, canvas)
+        weaponsGUI.isWeaponActive = true;
+        // weaponActive(ctx, canvas)
       } else if (isOnWeapons && weaponsSelected) {
         weaponsSelected = false;
-        weaponInactive(ctx, canvas)
+        weaponsGUI.isWeaponActive = false;
+        // weaponInactive(ctx, canvas)
       } else if (isOnEnemy) {
         // Call enemy attack function
         console.log("Attack enemy");
       }
-      console.log(weaponsSelected);
+
     }
   );
 }
 
-function loop(canvas, ctx, hitpointsGUI, weaponsGUI) {
+function loop() {
 
+  console.log(number++);
   // clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -82,15 +85,19 @@ window.onload = () => {
   const ctx = canvas.getContext('2d');
   var hitpointsGUI = new hpGUI(canvas, ctx);
   var weaponsGUI = new wpGUI(canvas, ctx);
-  window.setInterval(loop(canvas, ctx, hitpointsGUI, weaponsGUI), 1000 / 60);
+  addControllers(canvas, ctx, hitpointsGUI, weaponsGUI);
+  window.setInterval(() => {
+    // clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // draw tank
 
-  // // draw background and initialize listeners // probably need to create another canvas for events
-  // addControllers(weaponCtx, weaponCanvas);
-  //
-  //
-  //
-  // // draw weapons
-  // weaponInactive(weaponCtx, weaponCanvas);
+    // draw enemy tank
 
+    // draw hp
+    hitpointsGUI.refreshHp();
+
+    // draw weapons
+    weaponsGUI.drawWeapon();
+  }, 1000 / 60);
 };

@@ -33,11 +33,29 @@ class Laser{
 		this.ctx.lineWidth = 2;
 		this.ctx.strokeStyle = '#666666';
 		this.ctx.stroke();
-		/**
-			if(lineStart.x > 1024 || lineStart.y > 768){
-				DELETE OBJECT
-			}
-		*/
+	}
+}
+
+class Explosion{
+	constructor(canvas, ctx, explosion, x, y){
+		this.canvas = canvas;
+		this.ctx = ctx;
+		this.explosion = explosion;
+		this.x = x;
+		this.y = y;
+		this.sx = 0;
+		this.i = 0;
+	}
+	
+	drawExplosion() {
+		console.log(this.x);
+		console.log(this.y);
+		console.log(this.sx);
+		this.ctx.drawImage(this.explosion, this.sx, 0, 26, 26, this.x, this.y, 26, 26);
+		this.i++;
+		if( this.i%4 == 0){
+			this.sx += 26;
+		}
 	}
 }
 

@@ -83,14 +83,29 @@ window.onload = () => {
   var mainTank;
   var shootAnimation = new Image(5121, 658);
 	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
-
+  var explosionAnimation = new Image(234, 26);
+  explosionAnimation.src = '../../graphics/explosion.png';
+  var explosions = [];
   var lasers = [];
+  var imagesLoaded = 0;
+  var imageQuantity = 2;
   shootAnimation.onload = () => {
+		imagesLoaded++;
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
-		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers);
-
-
-	  window.setInterval(() => {
+		if (imagesLoaded == imageQuantity){
+			startGame();
+		}
+  }
+  explosionAnimation.onload = () => {
+	imagesLoaded++;
+	if (imagesLoaded == imageQuantity){
+		startGame();
+	}
+  }
+  
+	var startGame = () => {
+		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, explosions);
+		window.setInterval(() => {
 		// clear canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -101,15 +116,28 @@ window.onload = () => {
 			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768){
 				lasers.splice(i, 1);
 			}
+			else if(lasers[i].lineEnd.x >= enemyPosition.x0 && lasers[i].lineEnd.y >= enemyPosition.y0 && lasers[i].lineEnd.x <= enemyPosition.x1 && lasers[i].lineEnd.y <= enemyPosition.y1){
+				hitpointsGUI.enemyHitCount++;
+				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+				lasers.splice(i, 1);
+			}
 		}
 
 		// draw enemy tank
 		enemyTank.drawTank();
+		for(var i in explosions){
+			console.log(explosions);
+			explosions[i].drawExplosion();
+			if (explosions[i].i >= 36){
+				explosions.splice(i, 1);
+			}
+		}
 		// draw hp
 		hitpointsGUI.refreshHp();
 
 		// draw weapons
     weaponsGUI.drawWeapon();
 	  }, 1000 / 60);
-  }
+	}
+	  
 };

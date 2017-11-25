@@ -28,13 +28,13 @@ class hpGUI {
 			window.location.href='../menu/menu.html'
 		}
 		this.hpX = 75;
-		for (var i=0; i <= this.hp - this.hitCount; i++){
+		for (var i=0; i < this.hp - this.hitCount; i++){
 			this.drawBar(this.hpX);
 			this.hpX += 15;
 		}
 
 		this.hpX = 760;
-		for (i=0; i <= this.enemyHp - this.enemyHitCount; i++){
+		for (i=0; i < this.enemyHp - this.enemyHitCount; i++){
 			this.drawBar(this.hpX);
 			this.hpX += 15;
 		}

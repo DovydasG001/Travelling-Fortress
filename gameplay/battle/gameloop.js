@@ -16,15 +16,22 @@ var enemyPosition = {
   y1: 750
 };
 
-function checkMousePosition(mousePosition) {
+function checkMousePosition(mousePosition, mainTank, enemyTank) {
   if ((mousePosition.x >= weaponsPosition.x0 && mousePosition.x <= weaponsPosition.x1) && (mousePosition.y >= weaponsPosition.y0 && mousePosition.y <= weaponsPosition.y1)) {
     return "weapons";
-  } else if ((mousePosition.x >= enemyPosition.x0 && mousePosition.x <= enemyPosition.x1) && (mousePosition.y >= enemyPosition.y0 && mousePosition.y <= enemyPosition.y1)) {
-    return "enemy";
+  } else if (enemyTank.driverRoom.collides(mousePosition.x, mousePosition.y)){
+	mainTank.currentTarget = "config3"
+	return "driverRoom";
+  } else if (enemyTank.gunRoom.collides(mousePosition.x, mousePosition.y)){
+	  mainTank.currentTarget = "config2"
+	return "gunRoom";
+  } else if (enemyTank.engineRoom.collides(mousePosition.x, mousePosition.y)){
+	  mainTank.currentTarget = "config1"
+	return "engineRoom"
   }
 }
 
-function mouseMoveEvent(event, canvas) {
+function mouseMoveEvent(event, canvas, mainTank, enemyTank) {
   // Get mouse position
   mousePosition = {
     x: event.pageX - canvas.offsetLeft,
@@ -33,10 +40,10 @@ function mouseMoveEvent(event, canvas) {
 
   var x0 = 237, y0 = 708, x1 = 337, y1 = 768;
 
-  let mouseIsOn = checkMousePosition(mousePosition);
+  let mouseIsOn = checkMousePosition(mousePosition, mainTank, enemyTank);
   if (mouseIsOn == "weapons") {
     isOnWeapons = true;
-  } else if (mouseIsOn == "enemy") {
+  } else if (mouseIsOn == "driverRoom" || mouseIsOn == "engineRoom" || mouseIsOn == "gunRoom") {
     isOnEnemy = true;
   } else {
     isOnWeapons = false;
@@ -44,17 +51,19 @@ function mouseMoveEvent(event, canvas) {
   }
 }
 
-function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers) {
+function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, enemyTank) {
   canvas.addEventListener(
     'mousemove',
     (event) => {
-      mouseMoveEvent(event, canvas);
+      mouseMoveEvent(event, canvas, mainTank, enemyTank);
     }
   );
 
   canvas.addEventListener(
     'click',
     (event) => {
+		console.log(isOnEnemy);
+		console.log(weaponsSelected);
       if (isOnWeapons && !weaponsSelected && weaponsGUI.loadingBar > 0.98) {
         weaponsSelected = true;
         weaponsGUI.isWeaponActive = true;
@@ -63,7 +72,8 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers)
         weaponsGUI.isWeaponActive = false;
       } else if (isOnEnemy && weaponsSelected) {
         // Call enemy attack functionfunction()
-        lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, 90, 0));
+		
+        lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, mainTank.target[mainTank.currentTarget].angle, mainTank.target[mainTank.currentTarget].rotation));
 		    mainTank.shoot = true;
 		    cannonSound.play();
         weaponsSelected = false;
@@ -114,7 +124,7 @@ window.onload = () => {
   }
   
 	var startGame = () => {
-		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, explosions);
+		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, enemyTank);
 		var enemyShootFrames = 0;
 		window.setInterval(() => {
 		// clear canvas
@@ -138,16 +148,12 @@ window.onload = () => {
 		
 		if(enemyShootFrames >=110){
 			enemyShootFrames = 0;
-			console.log(enemyTank.gunPosition.x);
-			console.log(enemyTank.gunPosition.y);
 			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 100, 180));
-			console.log(lasers);
 		}
 		//draw lasers
 		for(var i in lasers){
-			console.log(lasers);
 			lasers[i].drawLaser();
-			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768){
+			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768 || lasers[i].lineStart.x < 0 || lasers[i].lineStart.y < 0){
 				lasers.splice(i, 1);
 			}
 			else if(lasers[i].checkIfCollidesWithEnemy(enemyPosition)){

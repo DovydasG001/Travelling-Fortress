@@ -36,7 +36,7 @@ class Laser{
 	}
 	
 	checkIfCollidesWithEnemy(enemyPosition){
-		return this.lineEnd.x >= enemyPosition.x0+120 && this.lineEnd.y >= enemyPosition.y0+100 && this.lineEnd.x <= enemyPosition.x1 && this.lineEnd.y <= enemyPosition.y1;
+		return this.lineEnd.x >= enemyPosition.x0+120 && this.lineEnd.y >= enemyPosition.y0+100 && this.lineEnd.x <= enemyPosition.x1 && this.lineEnd.y <= enemyPosition.y1 - 150;
 	}
 	
 	checkIfCollidesWithPlayer(playerPosition){

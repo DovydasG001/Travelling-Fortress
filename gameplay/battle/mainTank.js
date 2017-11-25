@@ -17,6 +17,24 @@ class MainTank{
 			x: this.position.x + (this.position.x1 - this.position.x) * 528 / 569,
 			y: this.position.y + 25 + (this.position.y1 - this.position.y) * 155 / 658,
 		};
+		this.target = {
+			config1: {
+				rotation: 10,
+				angle: 45,
+				cooldown: 1,
+			},
+			config2: {
+				rotation: 15,
+				angle: 90,
+				cooldown: 1.5,
+			},
+			config3: {
+				rotation: 45,
+				angle: 25,
+				cooldown: 1.25,
+			}
+		},
+		this.currentTarget = 'config1';
 	}
 
 	drawTank(){

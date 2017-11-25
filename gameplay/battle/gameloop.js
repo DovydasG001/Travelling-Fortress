@@ -106,26 +106,47 @@ window.onload = () => {
   
 	var startGame = () => {
 		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, explosions);
+		var enemyShootFrames = 0;
 		window.setInterval(() => {
 		// clear canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		// draw tank
 		mainTank.drawTank();
+
+		// draw enemy tank
+		enemyTank.drawTank();
+		// draw hp
+		hitpointsGUI.refreshHp();
+
+		// draw weapons
+		weaponsGUI.drawWeapon();
+		if (weaponsGUI.loadingBar < 1) {
+		  weaponsGUI.loadWeapon();
+		  console.log("loading bar: " + weaponsGUI.loadingBar);
+		}
+		//enemy shoot
+		if(enemyShootFrames >=110){
+			enemyShootFrames = 0;
+			lasers.push(new Laser(canvas, ctx, 660, 200, 45, 180));
+		}
+		//draw lasers
 		for(var i in lasers){
 			lasers[i].drawLaser();
 			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768){
 				lasers.splice(i, 1);
 			}
-			else if(lasers[i].lineEnd.x >= enemyPosition.x0 && lasers[i].lineEnd.y >= enemyPosition.y0 && lasers[i].lineEnd.x <= enemyPosition.x1 && lasers[i].lineEnd.y <= enemyPosition.y1){
+			else if(lasers[i].checkIfCollidesWithEnemy(enemyPosition)){
 				hitpointsGUI.enemyHitCount++;
+				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+				lasers.splice(i, 1);
+			} else if(lasers[i].checkIfCollidesWithPlayer(mainTank.position)){
+				hitpointsGUI.hitCount++;
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 				lasers.splice(i, 1);
 			}
 		}
-
-		// draw enemy tank
-		enemyTank.drawTank();
+		//draw exsplosions
 		for(var i in explosions){
 			console.log(explosions);
 			explosions[i].drawExplosion();
@@ -133,15 +154,8 @@ window.onload = () => {
 				explosions.splice(i, 1);
 			}
 		}
-		// draw hp
-		hitpointsGUI.refreshHp();
-
-		// draw weapons
-    weaponsGUI.drawWeapon();
-    if (weaponsGUI.loadingBar < 1) {
-      weaponsGUI.loadWeapon();
-      console.log("loading bar: " + weaponsGUI.loadingBar);
-    }
+		
+		enemyShootFrames++;
 
 	  }, 1000 / 60);
 	}

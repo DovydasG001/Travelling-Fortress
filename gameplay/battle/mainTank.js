@@ -8,7 +8,9 @@ class MainTank{
 		this.shoot = false;
 		this.position = {
 			x: 0,
-			y: 50
+			y: 50,
+			x1: 569,
+			y1: 708
 		};
 	}
 

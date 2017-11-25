@@ -34,6 +34,14 @@ class Laser{
 		this.ctx.strokeStyle = '#666666';
 		this.ctx.stroke();
 	}
+	
+	checkIfCollidesWithEnemy(enemyPosition){
+		return this.lineEnd.x >= enemyPosition.x0 && this.lineEnd.y >= enemyPosition.y0 && this.lineEnd.x <= enemyPosition.x1 && this.lineEnd.y <= enemyPosition.y1;
+	}
+	
+	checkIfCollidesWithPlayer(playerPosition){
+		return this.lineEnd.x <= playerPosition.x1-200 && this.lineEnd.y <= playerPosition.y1 && this.lineEnd.x >= playerPosition.x && this.lineEnd.y >= playerPosition.y+100;
+	}
 }
 
 class Explosion{
@@ -48,9 +56,6 @@ class Explosion{
 	}
 	
 	drawExplosion() {
-		console.log(this.x);
-		console.log(this.y);
-		console.log(this.sx);
 		this.ctx.drawImage(this.explosion, this.sx, 0, 26, 26, this.x, this.y, 26, 26);
 		this.i++;
 		if( this.i%4 == 0){

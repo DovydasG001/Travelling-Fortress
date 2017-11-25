@@ -24,7 +24,7 @@ class hpGUI {
 	}
 
 	refreshHp() {
-		if(this.enemyHp == this.enemyHitCount){
+		if(this.enemyHp == this.enemyHitCount || this.hp == this.hitCount){
 			window.location.href='../menu/menu.html'
 		}
 		this.hpX = 75;

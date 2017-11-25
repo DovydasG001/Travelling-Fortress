@@ -20,40 +20,13 @@
 
 <script src="./hp.js"></script>
 <script src="./effect.js"></script>
+<script src="./mainTank.js"></script>
 <script>
-	var canvas = document.getElementById("myCanvas");
-	var ctx = canvas.getContext("2d");
 	//Play Music
 	var backgroundMusic = new Audio('background.mp3');
 	backgroundMusic.loop = true;
 	backgroundMusic.play();
 	//Draw Tank
-	var shootAnimation = new Image(5121, 658);
-	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
-	shootAnimation.onload = function(){
-		ctx.drawImage(shootAnimation, 0, 0, 569, 658, 0, 150, 569, 658);
-	}
-	
-	effectCanvas.addEventListener("click", function( event ) {
-		shootLaser(400, 175, 90, 0);
-		var sx = 0;
-		var i = 0;
-		var interval = setInterval(function(){ 
-			if( i == 8){
-				clearInterval(interval);
-			}
-			ctx.clearRect(0, 150, 569, 658);
-			ctx.drawImage(shootAnimation, sx, 0, 569, 658, 0, 150, 569, 658);
-			sx += 569;
-			i++;
-		}, 75);
-		
-	});
-	
-	
-	refreshHp();
-	hitCount++;
-	refreshHp();
 </script>
 
 

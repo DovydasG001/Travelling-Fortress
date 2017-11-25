@@ -1,39 +1,44 @@
-var effectCanvas = document.getElementById("effectCanvas");
-var effectCtx = effectCanvas.getContext("2d");
-
-var shootLaser = function (startPointX, startPointY, angleWidth, shootAngle){
-	var length = 50
-	var randomAngle = Math.random() * (angleWidth - 1) + 1;
-	var cos = Math.cos(Math.PI * (((randomAngle - angleWidth / 2) + shootAngle) / 180.0));
-	var sin = Math.sin(Math.PI * (((randomAngle - angleWidth / 2) + shootAngle) / 180.0));
-	var lineEnd = {
-		x: startPointX + length * cos,
-		y: startPointY + length * sin
-	};
-	var lineStart = {
-		x: startPointX,
-		y: startPointY
-	};
+class Laser{
+	constructor(canvas, ctx, startPointX, startPointY, angleWidth, shootAngle){
+		this.canvas = canvas;
+		this.ctx = ctx;
+		this.startPointX = startPointX;
+		this.startPointY = startPointY;
+		this.angleWidth = angleWidth;
+		this.shootAngle = shootAngle;
+		this.length = 50;
+		this.randomAngle = Math.random() * (angleWidth - 1) + 1;
+		this.cos = Math.cos(Math.PI * (((randomAngle - angleWidth / 2) + shootAngle) / 180.0));
+		this.sin = Math.sin(Math.PI * (((randomAngle - angleWidth / 2) + shootAngle) / 180.0));
+		this.lineEnd = {
+			x: startPointX + length * cos,
+			y: startPointY + length * sin
+		};
+		this.lineStart = {
+			x: startPointX,
+			y: startPointY
+		};
+	}
 	
-	var interval = setInterval(function(){ 
-		effectCtx.clearRect(lineStart.x -2, lineStart.y -2, 4, 4);
-		effectCtx.beginPath();
-		effectCtx.moveTo(lineStart.x, lineStart.y);
-		effectCtx.lineTo(lineEnd.x, lineEnd.y);
-		effectCtx.closePath();
-		lineStart.x += cos;
-		lineStart.y += sin;
-		lineEnd.x += cos;
-		lineEnd.y += sin;
-		effectCtx.lineWidth = 2;
-		effectCtx.strokeStyle = '#666666';
-		effectCtx.stroke();
-		if(lineStart.x > 1024 || lineStart.y > 768){
-			clearInterval(interval);
-		}
-	}, 1);
-
-	
+	drawLaser(){
+		this.ctx.clearRect(this.lineStart.x -2, this.lineStart.y -2, 4, 4);
+		this.ctx.beginPath();
+		this.ctx.moveTo(this.lineStart.x, this.lineStart.y);
+		this.ctx.lineTo(this.lineEnd.x, this.lineEnd.y);
+		this.ctx.closePath();
+		this.lineStart.x += this.cos;
+		this.lineStart.y += this.sin;
+		this.lineEnd.x += this.cos;
+		this.lineEnd.y += this.sin;
+		this.ctx.lineWidth = 2;
+		this.ctx.strokeStyle = '#666666';
+		this.ctx.stroke();
+		/**
+			if(lineStart.x > 1024 || lineStart.y > 768){
+				DELETE OBJECT
+			}
+		*/
+	}
 }
 
 

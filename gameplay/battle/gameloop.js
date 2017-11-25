@@ -68,23 +68,32 @@ function mouseMoveEvent(event, canvas, mainTank, enemyTank) {
     y: event.pageY- canvas.offsetTop
   };
 
-  let mouseIsOn = checkMousePosition(mousePosition, mainTank, enemyTank);
-  if (mouseIsOn == "weapons") {
-    isOnWeapons = true;
-  } else if (mouseIsOn == "driverRoom" || mouseIsOn == "engineRoom" || mouseIsOn == "gunRoom") {
-    isOnEnemy = true;
-  } else if(mouseIsOn == "W") {
-    isOnW = true;
-  } else if(mouseIsOn == "E") {
-    isOnE = true;
-  } else if(mouseIsOn == "D") {
-    isOnD = true;
-  } else {
-    isOnWeapons = false;
-    isOnEnemy = false;
-    isOnW = false;
-    isOnE = false;
-    isOnD = false;
+  mouseIsOn = checkMousePosition(mousePosition, mainTank, enemyTank);
+  
+  switch (mouseIsOn){
+	case "weapons":
+		isOnWeapons = true;
+		break;
+	case "driverRoom":
+	case "engineRoom":
+	case "gunRoom":
+		isOnEnemy = true;
+		break;
+	case "W":
+		isOnW = true;
+		break;
+	case "E":
+		isOnE = true;
+		break;
+	case "D":
+		isOnD = true;
+		break;
+	default:
+		isOnWeapons = false;
+		isOnEnemy = false;
+		isOnW = false;
+		isOnE = false;
+		isOnD = false;
   }
 }
 
@@ -109,6 +118,7 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
         // Call enemy attack functionfunction()
         lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, mainTank.target[mainTank.currentTarget].angle, mainTank.target[mainTank.currentTarget].rotation));
 		    mainTank.shoot = true;
+			var cannonSound = new Audio('../../music/Cannon+3.mp3')
 		    cannonSound.play();
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
@@ -141,7 +151,7 @@ window.onload = () => {
   var explosionAnimation = new Image(234, 26);
   explosionAnimation.src = '../../graphics/explosion.png';
   var enemyTankSheet = new Image(270, 148);
-  enemyTankSheet.src = '../../graphics/enemyTank1.png';
+  enemyTankSheet.src = '../../graphics/enemyShooting.png';
   var crosshair = new Image(300, 300);
   crosshair.src = '../../graphics/crosshair.gif';
   var explosions = [];
@@ -204,13 +214,13 @@ window.onload = () => {
 
 		switch(mouseIsOn){
 			case "engineRoom":
-				ctx.drawImage(crosshair, enemyTank.position.x + 245, enemyTank.position.y + 165, 100, 100);
+				ctx.drawImage(crosshair, enemyTank.position.x + 315, enemyTank.position.y + 185, 100, 100);
 				break;
 			case "driverRoom":
 				ctx.drawImage(crosshair, enemyTank.driverRoom.x0+35, enemyTank.driverRoom.y0-25, 100, 100);
 				break;
 			case "gunRoom":
-				ctx.drawImage(crosshair, enemyTank.gunRoom.x0 - 25, enemyTank.gunRoom.y0, 100, 100);
+				ctx.drawImage(crosshair, enemyTank.gunRoom.x0 - 20, enemyTank.gunRoom.y0, 100, 100);
 				break;
 			default:
 
@@ -221,6 +231,9 @@ window.onload = () => {
 		if(enemyShootFrames >=110){
 			enemyShootFrames = 0;
 			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 100, 180));
+			enemyTank.shoot = true;
+			var cannonSound = new Audio('../../music/Cannon+3.mp3')
+			cannonSound.play();
 		}
 		//draw lasers
 		for(var i in lasers){

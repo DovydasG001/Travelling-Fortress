@@ -63,7 +63,7 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers)
         weaponsGUI.isWeaponActive = false;
       } else if (isOnEnemy && weaponsSelected) {
         // Call enemy attack functionfunction()
-        lasers.push(new Laser(canvas, ctx, 560, 200, 90, 0));
+        lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, 90, 0));
 		    mainTank.shoot = true;
 		    cannonSound.play();
         weaponsSelected = false;
@@ -80,19 +80,28 @@ window.onload = () => {
   const ctx = canvas.getContext('2d');
   var hitpointsGUI = new hpGUI(canvas, ctx);
   var weaponsGUI = new wpGUI(canvas, ctx);
-  var enemyTank = new EnemyTank(canvas, ctx);
   var mainTank;
+  var enemyTank;
   var shootAnimation = new Image(5121, 658);
 	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
   var explosionAnimation = new Image(234, 26);
   explosionAnimation.src = '../../graphics/explosion.png';
+  var enemyTankSheet = new Image(270, 148);
+  enemyTankSheet.src = '../../graphics/enemyTank1.png';
   var explosions = [];
   var lasers = [];
   var imagesLoaded = 0;
-  var imageQuantity = 2;
+  var imageQuantity = 3;
   shootAnimation.onload = () => {
 		imagesLoaded++;
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
+		if (imagesLoaded == imageQuantity){
+			startGame();
+		}
+  }
+  enemyTankSheet.onload = () => {
+		imagesLoaded++;
+		enemyTank = new EnemyTank(canvas, ctx, enemyTankSheet);
 		if (imagesLoaded == imageQuantity){
 			startGame();
 		}
@@ -126,12 +135,17 @@ window.onload = () => {
 		  console.log("loading bar: " + weaponsGUI.loadingBar);
 		}
 		//enemy shoot
+		
 		if(enemyShootFrames >=110){
 			enemyShootFrames = 0;
-			lasers.push(new Laser(canvas, ctx, 660, 200, 45, 180));
+			console.log(enemyTank.gunPosition.x);
+			console.log(enemyTank.gunPosition.y);
+			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 100, 180));
+			console.log(lasers);
 		}
 		//draw lasers
 		for(var i in lasers){
+			console.log(lasers);
 			lasers[i].drawLaser();
 			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768){
 				lasers.splice(i, 1);
@@ -148,7 +162,6 @@ window.onload = () => {
 		}
 		//draw exsplosions
 		for(var i in explosions){
-			console.log(explosions);
 			explosions[i].drawExplosion();
 			if (explosions[i].i >= 36){
 				explosions.splice(i, 1);

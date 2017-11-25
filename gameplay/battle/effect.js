@@ -36,11 +36,11 @@ class Laser{
 	}
 	
 	checkIfCollidesWithEnemy(enemyPosition){
-		return this.lineEnd.x >= enemyPosition.x0 && this.lineEnd.y >= enemyPosition.y0 && this.lineEnd.x <= enemyPosition.x1 && this.lineEnd.y <= enemyPosition.y1;
+		return this.lineEnd.x >= enemyPosition.x0+120 && this.lineEnd.y >= enemyPosition.y0+100 && this.lineEnd.x <= enemyPosition.x1 && this.lineEnd.y <= enemyPosition.y1;
 	}
 	
 	checkIfCollidesWithPlayer(playerPosition){
-		return this.lineEnd.x <= playerPosition.x1-200 && this.lineEnd.y <= playerPosition.y1 && this.lineEnd.x >= playerPosition.x && this.lineEnd.y >= playerPosition.y+100;
+		return this.lineEnd.x <= playerPosition.x1-200 && this.lineEnd.y <= playerPosition.y1+100 && this.lineEnd.x >= playerPosition.x && this.lineEnd.y >= playerPosition.y+75;
 	}
 }
 

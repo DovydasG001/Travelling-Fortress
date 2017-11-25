@@ -6,11 +6,16 @@ class MainTank{
 		this.i = 0;
 		this.shootAnimation = shootAnimation;
 		this.shoot = false;
+		this.resizeRatio = 0.75;
 		this.position = {
 			x: 0,
-			y: 50,
-			x1: 569,
-			y1: 708
+			y: 150,
+			x1: 569 * this.resizeRatio,
+			y1: 708 * this.resizeRatio
+		};
+		this.gunPosition = {
+			x: this.position.x + (this.position.x1 - this.position.x) * 528 / 569,
+			y: this.position.y + 25 + (this.position.y1 - this.position.y) * 155 / 658,
 		};
 	}
 
@@ -21,7 +26,7 @@ class MainTank{
 				this.sx = 0;
 				this.shoot = false;
 			}
-			this.ctx.drawImage(this.shootAnimation, this.sx, 0, 569, 658, this.position.x, this.position.y, 569, 658);
+			this.ctx.drawImage(this.shootAnimation, this.sx, 0, 569, 658, this.position.x, this.position.y, 569 * this.resizeRatio, 658 * this.resizeRatio);
 			this.i++;
 			if( this.i%4 == 0){
 				this.sx += 569;
@@ -29,7 +34,7 @@ class MainTank{
 
 
 		} else {
-			this.ctx.drawImage(this.shootAnimation, 0, 0, 569, 658, this.position.x, this.position.y, 569, 658);
+			this.ctx.drawImage(this.shootAnimation, 0, 0, 569, 658, this.position.x, this.position.y, 569 * this.resizeRatio, 658 * this.resizeRatio);
 		}
 	}
 

@@ -26,10 +26,8 @@ class wpGUI {
     }
     if (this.isWeaponActive) {
       this.setActive();
-      console.log("Sets active");
     } else {
       this.setInactive();
-      console.log("Sets Inactive");
     }
   }
 

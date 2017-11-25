@@ -29,7 +29,7 @@ class MainTank{
 				cooldown: 1.5,
 			},
 			config3: {
-				rotation: 45,
+				rotation: 40,
 				angle: 25,
 				cooldown: 1.25,
 			}

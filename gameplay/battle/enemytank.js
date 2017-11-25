@@ -18,6 +18,7 @@ class EnemyTank{
 		};
 		
 		this.driverRoom = {
+			hp: 3,
 			x0: this.position.x + 220,
 			y0: this.position.y + 303,
 			x1: this.position.x + 380,
@@ -28,6 +29,7 @@ class EnemyTank{
 		};
 		
 		this.gunRoom = {
+			hp: 3,
 			x0: this.position.x + 215,
 			y0: this.position.y + 190,
 			x1: this.position.x + 280,
@@ -38,7 +40,8 @@ class EnemyTank{
 			
 		};
 		this.engineRoom = {
-			x0: this.position.x + 198,
+			hp: 3,
+			x0: this.position.x + 216,
 			y0: this.position.y + 140,
 			x1: this.position.x + 235,
 			y1: this.position.y + 100,

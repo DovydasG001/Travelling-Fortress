@@ -34,7 +34,7 @@ function mouseMoveEvent(event, canvas) {
   }
 }
 
-function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI) {
+function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers) {
   canvas.addEventListener(
     'mousemove',
     (event) => {
@@ -48,39 +48,18 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI) {
       if (isOnWeapons && !weaponsSelected) {
         weaponsSelected = true;
         weaponsGUI.isWeaponActive = true;
-        // weaponActive(ctx, canvas)
       } else if (isOnWeapons && weaponsSelected) {
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
-        // weaponInactive(ctx, canvas)
-      } else if (isOnEnemy) {
-        // Call enemy attack function
-        console.log("Attack enemy");
+      } else if (!isOnEnemy && weaponsSelected) {
+        // Call enemy attack functionfunction()
+        lasers.push(new Laser(canvas, ctx, 560, 300, 90, 0));
+        weaponsSelected = false;
+        weaponsGUI.isWeaponActive = false;
       }
 
     }
   );
-}
-
-function loop() {
-  console.log(number++);
-  // clear canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  // draw tank
-  mainTank.drawTank();
-  for(var laser in lasers){
-	console.log(laser);
-	lasers[laser].drawLaser();
-  }
-  // draw enemy tank
-
-  // draw hp
-  hitpointsGUI.refreshHp();
-
-  // draw weapons
-  weaponsGUI.drawWeapon();
-
 }
 
 window.onload = () => {
@@ -91,16 +70,13 @@ window.onload = () => {
   var mainTank;
   var shootAnimation = new Image(5121, 658);
 	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
-	
-  var lasers = [new Laser(canvas, ctx, 560, 300, 90, 0)];
+
+  var lasers = [];
   addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers);
-  canvas.addEventListener("click", function( event ) {
-		lasers.push(new Laser(canvas, ctx, 560, 300, 90, 0));
-	});
-  shootAnimation.onload = function(){
+  shootAnimation.onload = () => {
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
-		
-	
+
+
 	  window.setInterval(() => {
 		// clear canvas
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -112,7 +88,7 @@ window.onload = () => {
 			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768){
 				lasers.splice(i, 1);
 			}
-			
+
 		}
 
 		// draw enemy tank

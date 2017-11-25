@@ -54,6 +54,8 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers)
       } else if (!isOnEnemy && weaponsSelected) {
         // Call enemy attack functionfunction()
         lasers.push(new Laser(canvas, ctx, 560, 300, 90, 0));
+		mainTank.shoot = true;
+		cannonSound.play();
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
       }
@@ -72,9 +74,9 @@ window.onload = () => {
 	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
 
   var lasers = [];
-  addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers);
   shootAnimation.onload = () => {
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
+		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers);
 
 
 	  window.setInterval(() => {
@@ -88,7 +90,6 @@ window.onload = () => {
 			if(lasers[i].lineStart.x > 1024 || lasers[i].lineStart.y > 768){
 				lasers.splice(i, 1);
 			}
-
 		}
 
 		// draw enemy tank

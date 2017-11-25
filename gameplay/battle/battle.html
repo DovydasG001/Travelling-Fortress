@@ -33,9 +33,27 @@
 	tankImage.onload = function(){
 	  ctx.drawImage(tankImage, 100, 150);
 	};
+	var shootAnimation = new Image(1152, 148);
+	shootAnimation.src = '../../graphics/shootAnimation.png';
+	shootAnimation.onload = function(){
+		console.log("B");
+		//ctx.drawImage(shootAnimation, 128, 0, 128, 148, 100, 150, 128, 148);
+	}
 	
 	effectCanvas.addEventListener("click", function( event ) {
 		shootLaser(400, 175, 90, 0);
+		var sx = 0;
+		var i = 0;
+		var interval = setInterval(function(){ 
+			if( i == 8){
+				clearInterval(interval);
+			}
+			ctx.clearRect(100, 150, 128, 148);
+			ctx.drawImage(shootAnimation, sx, 0, 128, 148, 100, 150, 128, 148);
+			sx += 128;
+			i++;
+		}, 75);
+		
 	});
 	
 	

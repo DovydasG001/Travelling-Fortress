@@ -1,3 +1,4 @@
+
 var isOnWeapons = false;
 var isOnEnemy = false;
 var weaponsSelected = false;
@@ -13,7 +14,7 @@ var enemyPosition = {};
 
 function checkMousePosition(mousePosition) {
   if ((mousePosition.x >= weaponsPosition.x0 && mousePosition.x <= weaponsPosition.x1) && (mousePosition.y >= weaponsPosition.y0 && mousePosition.y <= weaponsPosition.y1)) {
-    return "isOnWeapons";
+    return "weapons";
   }
 }
 function mouseMoveEvent(event, canvas) {
@@ -26,7 +27,7 @@ function mouseMoveEvent(event, canvas) {
   var x0 = 237, y0 = 708, x1 = 337, y1 = 768;
 
   let mouseIsOn = checkMousePosition(mousePosition);
-  if (mouseIsOn == "isOnWeapons") {
+  if (mouseIsOn == "weapons") {
     isOnWeapons = true;
   } else {
     isOnWeapons = false;
@@ -43,12 +44,7 @@ function weaponActive(ctx, canvas) {
   ctx.fillRect(weaponsPosition.x0, weaponsPosition.y0, 120, 60);
 }
 
-function gameLoop(ctx, canvas) {
-  // Clear canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'gray';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
+function addControllers(ctx, canvas) {
   canvas.addEventListener(
     'mousemove',
     (event) => {
@@ -74,11 +70,31 @@ function gameLoop(ctx, canvas) {
   );
 }
 
-window.onload = () => {
-  const canvas = document.querySelector('canvas');
+function loop() {
+  const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
+  // clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // draw tank
+  // draw enemy tank
+  // draw hp bar
+  var hitpointsGUI = new hpGUI(ctx, canvas);
+  // draw hp
 
-  gameLoop(ctx, canvas);
-  weaponInactive(ctx, canvas);
+  hitpointsGUI.refreshHp();
+  // draw weapons
+}
+
+window.onload = () => {
+  window.setInterval(loop, 1000 / 60);
+
+
+  // // draw background and initialize listeners // probably need to create another canvas for events
+  // addControllers(weaponCtx, weaponCanvas);
+  //
+  //
+  //
+  // // draw weapons
+  // weaponInactive(weaponCtx, weaponCanvas);
 
 };

@@ -24,8 +24,9 @@ class hpGUI {
 	}
 
 	refreshHp() {
-		this.ctx.clearRect(75, 10, 230, 45);
-		this.ctx.clearRect(760, 10, 230, 45);
+		if(this.enemyHp == this.enemyHitCount){
+			window.location.href='../menu/menu.html'
+		}
 		this.hpX = 75;
 		for (var i=0; i <= this.hp - this.hitCount; i++){
 			this.drawBar(this.hpX);

@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Traveling Fortress</title>
 	<style>
-    	canvas { background: #eee; display: block; margin: 0 auto;}
+    	canvas {display: block; margin: 0 auto;}
     </style>
 </head>
 <body>
@@ -12,15 +12,44 @@
 <div style="margin: 0 auto; width: 1024px">
 	<canvas style = "position: absolute;" id="myCanvas" width="1024" height="768"></canvas>
 	<canvas style = "position: absolute;" id="hpGUI" width="1024" height="100"></canvas>
+	<canvas style = "position: absolute;" id="effectCanvas" width="1024" height="768"></canvas>
+	
 </div>
 
 
 
 <script src="./hp.js"></script>
+<script src="./effect.js"></script>
 <script>
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
 	var backgroundMusic = new Audio('background.mp3');
 	backgroundMusic.loop = true;
 	backgroundMusic.play();
+	
+	//Paint Fake Tank
+		ctx.beginPath();
+		ctx.lineWidth="3";
+		ctx.strokeStyle="black";
+		ctx.rect(100, 150, 300, 300);
+		ctx.fillStyle = "grey";
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+		ctx.beginPath();
+		ctx.lineWidth="2";
+		ctx.strokeStyle="black";
+		ctx.rect(400, 175, 30, 15);
+		ctx.fillStyle = "yellow";
+		ctx.fill();
+		ctx.stroke();
+		ctx.closePath();
+	
+	effectCanvas.addEventListener("click", function( event ) {
+		shootLaser(400, 175, 90, 0);
+	});
+	
+	
 	refreshHp();
 	hitCount++;
 	refreshHp();

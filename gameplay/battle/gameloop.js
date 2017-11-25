@@ -63,13 +63,17 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI) {
 }
 
 function loop() {
-
   console.log(number++);
   // clear canvas
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // draw tank
-
+  mainTank.drawTank();
+  console.log(lasers);
+  for(var laser in lasers){
+	console.log(laser);
+	lasers[laser].drawLaser();
+  }
   // draw enemy tank
 
   // draw hp
@@ -85,19 +89,35 @@ window.onload = () => {
   const ctx = canvas.getContext('2d');
   var hitpointsGUI = new hpGUI(canvas, ctx);
   var weaponsGUI = new wpGUI(canvas, ctx);
-  addControllers(canvas, ctx, hitpointsGUI, weaponsGUI);
-  window.setInterval(() => {
-    // clear canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  var mainTank;
+  var shootAnimation = new Image(5121, 658);
+	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
+	
+  var lasers = [new Laser(canvas, ctx, 560, 300, 90, 0)];
+  addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers);
+  canvas.addEventListener("click", function( event ) {
+		console.log("A");
+		lasers.push(new Laser(canvas, ctx, 560, 300, 90, 0));
+	});
+  shootAnimation.onload = function(){
+		mainTank = new MainTank(canvas, ctx, shootAnimation);
+		
+	
+	  window.setInterval(() => {
+		// clear canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // draw tank
+		// draw tank
+		
+	 // window.setInterval(loop(canvas, ctx, hitpointsGUI, mainTank), 1000 / 60);
 
-    // draw enemy tank
+		// draw enemy tank
 
-    // draw hp
-    hitpointsGUI.refreshHp();
+		// draw hp
+		hitpointsGUI.refreshHp();
 
-    // draw weapons
-    weaponsGUI.drawWeapon();
-  }, 1000 / 60);
+		// draw weapons
+		weaponsGUI.drawWeapon();
+	  }, 1000 / 60);
+  }
 };

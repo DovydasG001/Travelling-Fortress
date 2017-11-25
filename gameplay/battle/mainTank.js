@@ -1,14 +1,14 @@
 class MainTank{
-	constructor(canvas,ctx){
+	constructor(canvas,ctx, shootAnimation){
 		this.canvas = canvas;
 		this.ctx = ctx;
 		this.sx = 0;
 		this.i = 0;
-		this.shootAnimation = new Image(5121, 658);
-		this.shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
-		this.shootAnimation.onload = function(){
-			ctx.drawImage(shootAnimation, 0, 0, 569, 658, 0, 150, 569, 658);
-		}
+		this.shootAnimation = shootAnimation;
+	}
+	
+	drawTank(){
+		this.ctx.drawImage(this.shootAnimation, 0, 0, 569, 658, 0, 150, 569, 658);
 	}
 	
 	shootCannon(){

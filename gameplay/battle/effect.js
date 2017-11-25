@@ -8,15 +8,15 @@ class Laser{
 		this.shootAngle = shootAngle;
 		this.length = 50;
 		this.randomAngle = Math.random() * (angleWidth - 1) + 1;
-		this.cos = Math.cos(Math.PI * (((randomAngle - angleWidth / 2) + shootAngle) / 180.0));
-		this.sin = Math.sin(Math.PI * (((randomAngle - angleWidth / 2) + shootAngle) / 180.0));
+		this.cos = Math.cos(Math.PI * (((this.randomAngle - angleWidth / 2) + this.shootAngle) / 180.0));
+		this.sin = Math.sin(Math.PI * (((this.randomAngle - angleWidth / 2) + this.shootAngle) / 180.0));
 		this.lineEnd = {
-			x: startPointX + length * cos,
-			y: startPointY + length * sin
+			x: this.startPointX + this.length * this.cos,
+			y: this.startPointY + this.length * this.sin
 		};
 		this.lineStart = {
-			x: startPointX,
-			y: startPointY
+			x: this.startPointX,
+			y: this.startPointY
 		};
 	}
 	

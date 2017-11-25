@@ -67,6 +67,7 @@ window.onload = () => {
   const ctx = canvas.getContext('2d');
   var hitpointsGUI = new hpGUI(canvas, ctx);
   var weaponsGUI = new wpGUI(canvas, ctx);
+  var enemyTank = new EnemyTank(canvas, ctx);
   var mainTank;
   var shootAnimation = new Image(5121, 658);
 	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
@@ -92,7 +93,7 @@ window.onload = () => {
 		}
 
 		// draw enemy tank
-
+		enemyTank.drawTank();
 		// draw hp
 		hitpointsGUI.refreshHp();
 

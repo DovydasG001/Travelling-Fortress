@@ -1,4 +1,3 @@
-var number = 0;
 var isOnWeapons = false;
 var isOnEnemy = false;
 var weaponsSelected = false;
@@ -10,13 +9,21 @@ var weaponsPosition = {
   y1: 768
 };
 
-var enemyPosition = {};
+var enemyPosition = {
+  x0: 614,
+  y0: 150,
+  x1: 994,
+  y1: 750
+};
 
 function checkMousePosition(mousePosition) {
   if ((mousePosition.x >= weaponsPosition.x0 && mousePosition.x <= weaponsPosition.x1) && (mousePosition.y >= weaponsPosition.y0 && mousePosition.y <= weaponsPosition.y1)) {
     return "weapons";
+  } else if ((mousePosition.x >= enemyPosition.x0 && mousePosition.x <= enemyPosition.x1) && (mousePosition.y >= enemyPosition.y0 && mousePosition.y <= enemyPosition.y1)) {
+    return "enemy";
   }
 }
+
 function mouseMoveEvent(event, canvas) {
   // Get mouse position
   mousePosition = {
@@ -29,8 +36,11 @@ function mouseMoveEvent(event, canvas) {
   let mouseIsOn = checkMousePosition(mousePosition);
   if (mouseIsOn == "weapons") {
     isOnWeapons = true;
+  } else if (mouseIsOn == "enemy") {
+    isOnEnemy = true;
   } else {
     isOnWeapons = false;
+    isOnEnemy = false;
   }
 }
 
@@ -51,11 +61,11 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers)
       } else if (isOnWeapons && weaponsSelected) {
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
-      } else if (!isOnEnemy && weaponsSelected) {
+      } else if (isOnEnemy && weaponsSelected) {
         // Call enemy attack functionfunction()
         lasers.push(new Laser(canvas, ctx, 560, 300, 90, 0));
-		mainTank.shoot = true;
-		cannonSound.play();
+		    mainTank.shoot = true;
+		    cannonSound.play();
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
       }
@@ -99,7 +109,7 @@ window.onload = () => {
 		hitpointsGUI.refreshHp();
 
 		// draw weapons
-		weaponsGUI.drawWeapon();
+    weaponsGUI.drawWeapon();
 	  }, 1000 / 60);
   }
 };

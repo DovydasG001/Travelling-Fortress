@@ -31,9 +31,6 @@ class wpGUI {
   }
 
   drawWeapon() {
-    if (this.loadingBar > 0.98) {
-      this.isWeaponActive = true;
-    }
     if (this.isWeaponActive) {
       this.setActive();
     } else {

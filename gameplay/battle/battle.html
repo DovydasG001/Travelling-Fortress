@@ -23,27 +23,16 @@
 <script>
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
+	//Play Music
 	var backgroundMusic = new Audio('background.mp3');
 	backgroundMusic.loop = true;
 	backgroundMusic.play();
-	
-	//Paint Fake Tank
-		ctx.beginPath();
-		ctx.lineWidth="3";
-		ctx.strokeStyle="black";
-		ctx.rect(100, 150, 300, 300);
-		ctx.fillStyle = "grey";
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
-		ctx.beginPath();
-		ctx.lineWidth="2";
-		ctx.strokeStyle="black";
-		ctx.rect(400, 175, 30, 15);
-		ctx.fillStyle = "yellow";
-		ctx.fill();
-		ctx.stroke();
-		ctx.closePath();
+	//Draw Tank
+	var tankImage = new Image(128, 148);
+	tankImage.src = '../../graphics/mainTank.png';
+	tankImage.onload = function(){
+	  ctx.drawImage(tankImage, 100, 150);
+	};
 	
 	effectCanvas.addEventListener("click", function( event ) {
 		shootLaser(400, 175, 90, 0);

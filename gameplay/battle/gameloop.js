@@ -118,8 +118,8 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
         // Call enemy attack functionfunction()
         lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, mainTank.target[mainTank.currentTarget].angle, mainTank.target[mainTank.currentTarget].rotation));
 		    mainTank.shoot = true;
-			var cannonSound = new Audio('../../music/Cannon+3.mp3')
-			cannonSound.volume = 0.2;
+        var cannonSound = new Audio('../../music/Cannon+3.mp3');
+        cannonSound.volume = 0.2;
 		    cannonSound.play();
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
@@ -178,6 +178,11 @@ window.onload = () => {
   var weaponLoadImg = new Image(71,33);
   weaponLoadImg.src = '../../graphics/missile.png';
   var weaponsGUI = new wpGUI(canvas, ctx, weaponLoadImg);
+
+  // Explosion sounds
+  var explosionEffect = new Audio('../../impact.mp3');
+  explosionEffect.volume = 0.2;
+
 
   var explosions = [];
   var lasers = [];
@@ -378,6 +383,7 @@ window.onload = () => {
 					enemyTank.gunRoom.hp--;
 				}
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+        // explosionEffect.play();
 				lasers.splice(i, 1);
 			} else if (enemyTank.driverRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 				hitpointsGUI.enemyHitCount++;
@@ -390,6 +396,7 @@ window.onload = () => {
 					mainTank.target.config3.angle = 10;
 				}
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+        // explosionEffect.play();
 				lasers.splice(i, 1);
 			} else if (enemyTank.engineRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 				hitpointsGUI.enemyHitCount++;
@@ -398,6 +405,7 @@ window.onload = () => {
 				}
 
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+        // explosionEffect.play();
 				lasers.splice(i, 1);
 			} else if(mainTank.gunRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){  //check player
 				hitpointsGUI.hitCount++;
@@ -405,6 +413,7 @@ window.onload = () => {
 					mainTank.gunRoom.hp--;
 				}
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+        // explosionEffect.play();
 				lasers.splice(i, 1);
 			} else if (mainTank.driverRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 				hitpointsGUI.hitCount++;
@@ -417,6 +426,7 @@ window.onload = () => {
 					enemyTank.target.config3.angle = 10;
 				}
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+        // explosionEffect.play();
 				lasers.splice(i, 1);
 			} else if (mainTank.engineRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 				hitpointsGUI.hitCount++;
@@ -430,6 +440,7 @@ window.onload = () => {
 		//draw explosions
 		for(var i in explosions){
 			explosions[i].drawExplosion();
+      explosionEffect.play();
 			if (explosions[i].i >= 36){
 				explosions.splice(i, 1);
 			}

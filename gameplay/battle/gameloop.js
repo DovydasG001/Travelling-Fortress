@@ -118,8 +118,8 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
         // Call enemy attack functionfunction()
         lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, mainTank.target[mainTank.currentTarget].angle, mainTank.target[mainTank.currentTarget].rotation, false, "mainTank"));
 		    mainTank.shoot = true;
-			var cannonSound = new Audio('../../music/Cannon+3.mp3')
-			cannonSound.volume = 0.2;
+        var cannonSound = new Audio('../../music/Cannon+3.mp3');
+        cannonSound.volume = 0.2;
 		    cannonSound.play();
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
@@ -153,10 +153,8 @@ window.onload = () => {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   var hitpointsGUI = new hpGUI(canvas, ctx);
-  var weaponsGUI = new wpGUI(canvas, ctx);
   var mainTank;
   var enemyTank;
-  var powerBar = new PowerBar(canvas, ctx);
   var shootAnimation = new Image(5121, 658);
 	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
   var explosionAnimation = new Image(234, 26);
@@ -169,11 +167,61 @@ window.onload = () => {
   wrench.src = '../../graphics/wrench.png';
   var background = new Image (1024, 768);
   background.src = '../../graphics/ruinedCityBackground.png';
+  
+  // Power bar images
+  var engineImg = new Image(30, 30);
+  engineImg.src = '../../graphics/engineRoomPic.png';
+  var weaponImg = new Image(30, 30);
+  weaponImg.src = '../../graphics/gunnerPic.png';
+  var driverImg = new Image(30, 30);
+  driverImg.src = '../../graphics/driverSeatPic.png';
+
+  // Weapon loading image
+  var weaponLoadImg = new Image(71,33);
+  weaponLoadImg.src = '../../graphics/missile.png';
+  var weaponsGUI = new wpGUI(canvas, ctx, weaponLoadImg);
+
+  // Explosion sounds
+  var explosionEffect = new Audio('../../impact.mp3');
+  explosionEffect.volume = 0.2;
+
+  //Player tank room explosions
+  
+
+
   var explosions = [];
   var lasers = [];
   var wrenches = [];
   var imagesLoaded = 0;
-  var imageQuantity = 6;
+  var imageQuantity = 10;
+  var powerBar;
+
+  weaponLoadImg.onload = () => {
+    imagesLoaded++;
+      if (imagesLoaded == imageQuantity){
+        startGame();
+      }
+  }
+
+  engineImg.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
+  weaponImg.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
+  driverImg.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
+
   shootAnimation.onload = () => {
 		imagesLoaded++;
 		if (imagesLoaded == imageQuantity){
@@ -199,7 +247,7 @@ window.onload = () => {
   		startGame();
   	}
   }
-  
+
   wrench.onload = () => {
 	imagesLoaded++;
   	if (imagesLoaded == imageQuantity){
@@ -217,6 +265,7 @@ window.onload = () => {
 	var startGame = () => {
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
 		enemyTank = new EnemyTank(canvas, ctx, enemyTankSheet, background);
+		powerBar = new PowerBar(canvas, ctx, engineImg, weaponImg, driverImg);
 		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, enemyTank, powerBar);
 		var progressFrames = 0;
 		var poweredFrames = 0;
@@ -296,7 +345,7 @@ window.onload = () => {
 		}
 		if(progressFrames%660==0 && enemyTank.engineRoom.hp>0){
 			let rooms = [enemyTank.driverRoom.hp, enemyTank.gunRoom.hp, enemyTank.engineRoom.hp];
-			
+
 			switch (rooms.indexOf(Math.min(enemyTank.driverRoom.hp, enemyTank.gunRoom.hp, enemyTank.engineRoom.hp))){
 				case 0:
 					if (enemyTank.driverRoom.hp < 3){
@@ -359,7 +408,7 @@ window.onload = () => {
 					default:
 				}
 			}
-			
+
 		}
 		ctx.drawImage(background, 0, 300, enemyTank.position.x1 - enemyTank.position.x, enemyTank.position.y1 - enemyTank.position.y, enemyTank.position.x, enemyTank.position.y, enemyTank.position.x1 - enemyTank.position.x, enemyTank.position.y1 - enemyTank.position.y);
 		ctx.rect(enemyTank.position.x, enemyTank.position.y, enemyTank.position.x1 - enemyTank.position.x, enemyTank.position.y1 - enemyTank.position.y);
@@ -448,18 +497,17 @@ window.onload = () => {
 					} 
 					 
 				}
-				
-				
 			}
 		}
 		//draw explosions
 		for(var i in explosions){
 			explosions[i].drawExplosion();
+			explosionEffect.play();
 			if (explosions[i].i >= 36){
 				explosions.splice(i, 1);
 			}
 		}
-		
+
 		//draw wrenches
 		for(var i in wrenches){
 			wrenches[i].drawWrench();

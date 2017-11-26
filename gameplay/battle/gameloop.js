@@ -153,7 +153,6 @@ window.onload = () => {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   var hitpointsGUI = new hpGUI(canvas, ctx);
-  var weaponsGUI = new wpGUI(canvas, ctx);
   var mainTank;
   var enemyTank;
   var shootAnimation = new Image(5121, 658);
@@ -175,11 +174,23 @@ window.onload = () => {
   var driverImg = new Image(30, 30);
   driverImg.src = '../../graphics/driverSeatPic.png';
 
+  // Weapon loading image
+  var weaponLoadImg = new Image(71,33);
+  weaponLoadImg.src = '../../graphics/missile.png';
+  var weaponsGUI = new wpGUI(canvas, ctx, weaponLoadImg);
+
   var explosions = [];
   var lasers = [];
   var wrenches = [];
   var imagesLoaded = 0;
-  var imageQuantity = 8;
+  var imageQuantity = 9;
+
+  weaponLoadImg.onload = () => {
+    imagesLoaded++;
+      if (imagesLoaded == imageQuantity){
+        startGame();
+      }
+  }
 
   engineImg.onload = () => {
 	imagesLoaded++;

@@ -1,13 +1,14 @@
 class wpGUI {
-  constructor(canvas, ctx) {
+  constructor(canvas, ctx, weaponLoadImg) {
     this.canvas = canvas;
     this.ctx = ctx;
+    this.weaponLoadImg = weaponLoadImg;
     this.isWeaponActive = false;
     this.loadingBar = 0;
     this.loadSpeed = 0.01;
     this.weaponsPosition = {
       x0: 237,
-      y0: 708,
+      y0: 698,
       x1: 337,
       y1: 768
     };
@@ -31,6 +32,7 @@ class wpGUI {
   }
 
   drawWeapon() {
+    this.ctx.drawImage(this.weaponLoadImg, this.weaponsPosition.x0-25, this.weaponsPosition.y0-10, 71*2.5, 33*2.5);
     if (this.isWeaponActive) {
       this.setActive();
     } else {
@@ -39,16 +41,12 @@ class wpGUI {
   }
 
   setInactive() {
-    this.ctx.fillStyle = 'red';
-    this.ctx.fillRect(this.weaponsPosition.x0, this.weaponsPosition.y0, 120, 60);
-    this.ctx.globalAlpha = 0.2;
     this.ctx.fillStyle = 'yellow';
-    this.ctx.fillRect(this.weaponsPosition.x0, this.weaponsPosition.y0 + 60 - (this.loadingBar*60), 120, (this.loadingBar*60));
-    this.ctx.globalAlpha = 1;
+    this.ctx.fillRect(this.weaponsPosition.x0+10 , this.weaponsPosition.y0+12 , (this.loadingBar*70), 34);
   }
 
   setActive() {
     this.ctx.fillStyle = 'green';
-    this.ctx.fillRect(this.weaponsPosition.x0, this.weaponsPosition.y0, 120, 60);
+    this.ctx.fillRect(this.weaponsPosition.x0+10 , this.weaponsPosition.y0+12 , (this.loadingBar*70), 34);
   }
 }

@@ -156,7 +156,6 @@ window.onload = () => {
   var weaponsGUI = new wpGUI(canvas, ctx);
   var mainTank;
   var enemyTank;
-  var powerBar = new PowerBar(canvas, ctx);
   var shootAnimation = new Image(5121, 658);
 	shootAnimation.src = '../../graphics/shootAnimation(fixedRez).png';
   var explosionAnimation = new Image(234, 26);
@@ -167,11 +166,41 @@ window.onload = () => {
   crosshair.src = '../../graphics/crosshair.gif';
   var wrench = new Image (700, 100);
   wrench.src = '../../graphics/wrench.png';
+
+  // Power bar images
+  var engineImg = new Image(30, 30);
+  engineImg.src = '../../graphics/engineRoomPic.png';
+  var weaponImg = new Image(30, 30);
+  weaponImg.src = '../../graphics/gunnerPic.png';
+  var driverImg = new Image(30, 30);
+  driverImg.src = '../../graphics/driverSeatPic.png';
+
   var explosions = [];
   var lasers = [];
   var wrenches = [];
   var imagesLoaded = 0;
-  var imageQuantity = 5;
+  var imageQuantity = 8;
+
+  engineImg.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
+  weaponImg.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
+  driverImg.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
+  var powerBar = new PowerBar(canvas, ctx, engineImg, weaponImg, driverImg);
+
   shootAnimation.onload = () => {
 		imagesLoaded++;
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
@@ -199,7 +228,7 @@ window.onload = () => {
   		startGame();
   	}
   }
-  
+
   wrench.onload = () => {
 	imagesLoaded++;
   	if (imagesLoaded == imageQuantity){
@@ -261,7 +290,7 @@ window.onload = () => {
 		}
 		if(progressFrames%660==0 && enemyTank.engineRoom.hp>0){
 			let rooms = [enemyTank.driverRoom.hp, enemyTank.gunRoom.hp, enemyTank.engineRoom.hp];
-			
+
 			switch (rooms.indexOf(Math.min(enemyTank.driverRoom.hp, enemyTank.gunRoom.hp, enemyTank.engineRoom.hp))){
 				case 0:
 					if (enemyTank.driverRoom.hp < 3){
@@ -324,9 +353,9 @@ window.onload = () => {
 					default:
 				}
 			}
-			
+
 		}
-		
+
 		//draw lasers
 		for(var i in lasers){
 			lasers[i].drawLaser();
@@ -356,7 +385,7 @@ window.onload = () => {
 				if (enemyTank.engineRoom.hp > 0){
 					enemyTank.engineRoom.hp--;
 				}
-				
+
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 				lasers.splice(i, 1);
 			} else if(mainTank.gunRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){  //check player
@@ -385,7 +414,7 @@ window.onload = () => {
 				}
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 				lasers.splice(i, 1);
-			} 
+			}
 		}
 		//draw explosions
 		for(var i in explosions){
@@ -394,7 +423,7 @@ window.onload = () => {
 				explosions.splice(i, 1);
 			}
 		}
-		
+
 		//draw wrenches
 		for(var i in wrenches){
 			wrenches[i].drawWrench();

@@ -183,6 +183,8 @@ window.onload = () => {
   var explosionEffect = new Audio('../../impact.mp3');
   explosionEffect.volume = 0.2;
 
+  //Player tank room explosions
+
 
   var explosions = [];
   var lasers = [];

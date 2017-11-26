@@ -182,10 +182,6 @@ window.onload = () => {
   weaponLoadImg.src = '../../graphics/missile.png';
   var weaponsGUI = new wpGUI(canvas, ctx, weaponLoadImg);
 
-  // Explosion sounds
-  var explosionEffect = new Audio('../../impact.mp3');
-  explosionEffect.volume = 0.2;
-
   //Player tank room explosions
   
 
@@ -302,9 +298,16 @@ window.onload = () => {
 						mainTank.gunRoom.hp--;
 						if(mainTank.gunRoom.hp == 0){
 							mainTank.gunRoomExplodes = true;
+							let explosionSound = new Audio('../../explosion.mp3');
+							explosionSound.volume = 0.2;
+							explosionSound.play();
 						}
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+					// Explosion sounds
+					let explosionEffect = new Audio('../../impact.mp3');
+					explosionEffect.volume = 0.2;
+					explosionEffect.play();
 					lasers.splice(i, 1);
 				} else if (mainTank.driverRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 					hitpointsGUI.hitCount++;
@@ -317,6 +320,10 @@ window.onload = () => {
 						enemyTank.target.config3.angle = 10;
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+					// Explosion sounds
+					let explosionEffect = new Audio('../../impact.mp3');
+					explosionEffect.volume = 0.2;
+					explosionEffect.play();
 					lasers.splice(i, 1);
 				} else if (mainTank.engineRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 					hitpointsGUI.hitCount++;
@@ -324,6 +331,10 @@ window.onload = () => {
 						mainTank.engineRoom.hp--;
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+					// Explosion sounds
+					let explosionEffect = new Audio('../../impact.mp3');
+					explosionEffect.volume = 0.2;
+					explosionEffect.play();
 					lasers.splice(i, 1);
 				}
 			}
@@ -344,12 +355,12 @@ window.onload = () => {
 		}
 
 		//enemy shoot
-		if(progressFrames%110==0 && enemyTank.gunRoom.hp>0){
+		if(progressFrames%440==0 && enemyTank.gunRoom.hp>0){
 			let poweredDodging = 0;
 			if (mainTank.driverRoom.powered && mainTank.driverRoom.hp>0){
-				poweredDodging = 8;
+				poweredDodging =4;
 			}
-			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 0+poweredDodging, 183, true, "enemyTank"));
+			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 8+poweredDodging, 183, true, "enemyTank"));
 			enemyTank.shoot = true;
 			var cannonSound = new Audio('../../music/Cannon+3.mp3');
 			cannonSound.volume = 0.2;
@@ -438,6 +449,10 @@ window.onload = () => {
 						enemyTank.gunRoom.hp--;
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+					// Explosion sounds
+					let explosionEffect = new Audio('../../impact.mp3');
+					explosionEffect.volume = 0.2;
+					explosionEffect.play();
 					lasers.splice(i, 1);
 				} else if (enemyTank.driverRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 					hitpointsGUI.enemyHitCount++;
@@ -450,6 +465,10 @@ window.onload = () => {
 						mainTank.target.config3.angle = 10;
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+					// Explosion sounds
+					let explosionEffect = new Audio('../../impact.mp3');
+					explosionEffect.volume = 0.2;
+					explosionEffect.play();
 					lasers.splice(i, 1);
 				} else if (enemyTank.engineRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){
 					hitpointsGUI.enemyHitCount++;
@@ -458,6 +477,10 @@ window.onload = () => {
 					}
 
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
+					// Explosion sounds
+					let explosionEffect = new Audio('../../impact.mp3');
+					explosionEffect.volume = 0.2;
+					explosionEffect.play();
 					lasers.splice(i, 1);
 				}
 
@@ -514,7 +537,6 @@ window.onload = () => {
 		//draw explosions
 		for(var i in explosions){
 			explosions[i].drawExplosion();
-			explosionEffect.play();
 			if (explosions[i].i >= 36){
 				explosions.splice(i, 1);
 			}

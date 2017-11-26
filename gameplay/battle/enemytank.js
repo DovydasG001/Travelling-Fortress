@@ -1,10 +1,11 @@
 class EnemyTank{
-	constructor(canvas,ctx, shootAnimation){
+	constructor(canvas,ctx, shootAnimation, background){
 		this.canvas = canvas;
 		this.ctx = ctx;
 		this.sx = 0;
 		this.i = 0;
 		this.shootAnimation = shootAnimation;
+		this.background = background;
 		this.shoot = false;
 		this.position = {
 			x: 544,

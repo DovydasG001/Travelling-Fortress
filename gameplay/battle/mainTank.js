@@ -19,18 +19,18 @@ class MainTank{
 		};
 		this.target = {
 			config1: {
-				rotation: 10,
-				angle: 45,
+				rotation: 2,
+				angle: 5,
 				cooldown: 1,
 			},
 			config2: {
-				rotation: 15,
-				angle: 90,
+				rotation: 5,
+				angle: 16,
 				cooldown: 1.5,
 			},
 			config3: {
-				rotation: 40,
-				angle: 25,
+				rotation: 6,
+				angle: 10,
 				cooldown: 1.25,
 			}
 		},

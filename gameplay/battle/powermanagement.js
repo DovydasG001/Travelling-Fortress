@@ -21,7 +21,7 @@ class PowerBar {
     this.ctx.fillStyle = 'black';
     this.ctx.drawImage(this.weaponImg, this.powerbarPosition.x, 690, 70, 70);
     this.ctx.drawImage(this.engineImg, this.powerbarPosition.x+62, 690, 70, 70);
-    this.ctx.drawImage(this.engineImg, this.powerbarPosition.x+120, 690, 70, 70);
+    this.ctx.drawImage(this.driverImg, this.powerbarPosition.x+120, 690, 70, 70);
 
     this.ctx.strokeStyle = 'gray';
     this.ctx.beginPath();

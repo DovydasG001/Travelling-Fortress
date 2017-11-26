@@ -169,7 +169,6 @@ window.onload = () => {
   background.src = '../../graphics/ruinedCityBackground.png';
   var mainTankExplosions = new Image(25605, 658);
   mainTankExplosions.src = '../../graphics/mainTankExplosion2.png';
-  
   // Power bar images
   var engineImg = new Image(30, 30);
   engineImg.src = '../../graphics/engineRoomPic.png';
@@ -256,7 +255,7 @@ window.onload = () => {
   		startGame();
   	}
   }
-  
+
   background.onload = () => {
 	imagesLoaded++;
   	if (imagesLoaded == imageQuantity){
@@ -326,12 +325,12 @@ window.onload = () => {
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					lasers.splice(i, 1);
-				} 
+				}
 			}
 		}
 
 		// draw enemy tank
-		
+
 		// draw hp
 		hitpointsGUI.refreshHp();
 
@@ -427,10 +426,10 @@ window.onload = () => {
 		ctx.rect(enemyTank.position.x, enemyTank.position.y, enemyTank.position.x1 - enemyTank.position.x, enemyTank.position.y1 - enemyTank.position.y);
 		ctx.stroke();
 		enemyTank.drawTank();
-		
-		
-		
-		
+
+
+
+
 		for(var i in lasers){
 			if(lasers[i].nearEnemy == true){
 				if (enemyTank.gunRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){ //checks enemy
@@ -457,11 +456,11 @@ window.onload = () => {
 					if (enemyTank.engineRoom.hp > 0){
 						enemyTank.engineRoom.hp--;
 					}
-					
+
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					lasers.splice(i, 1);
 				}
-				
+
 				console.log(lasers[i].lineStart.x);
 				console.log(enemyTank.position.x);
 				if(lasers[i].lineStart.y > enemyTank.position.y1 || lasers[i].lineStart.y < enemyTank.position.y){ //checks bounds
@@ -501,14 +500,14 @@ window.onload = () => {
 					 if(lasers[i].lineEnd.y < enemyTank.position.y && lasers[i].owner == "enemyTank" ){
 						newLine.y1 =  enemyTank.position.y;
 					 }
-					 
+
 					lasers[i].drawLaser(newLine);
 					if(lasers[i].lineStart.x <= enemyTank.position.x && lasers[i].owner == "enemyTank"){
 						lasers[i].nearEnemy = false;
 						lasers[i].lineStart.x += 3000 - enemyTank.position.x;
 						lasers[i].lineEnd.x += 3000 - enemyTank.position.x;
-					} 
-					 
+					}
+
 				}
 			}
 		}
@@ -528,7 +527,7 @@ window.onload = () => {
 				wrenches.splice(i, 1);
 			}
 		}
-		
+
 		//draw target
 
 		switch(mouseIsOn){

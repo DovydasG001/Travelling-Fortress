@@ -64,4 +64,24 @@ class Explosion{
 	}
 }
 
+class Wrench{
+	constructor(canvas, ctx, wrench, x, y){
+		this.canvas = canvas;
+		this.ctx = ctx;
+		this.wrench = wrench;
+		this.x = x;
+		this.y = y;
+		this.sx = 0;
+		this.i = 0;
+	}
+	
+	drawWrench() {
+		this.ctx.drawImage(this.wrench, this.sx, 0, 100, 100, this.x, this.y, 100, 100);
+		this.i++;
+		if( this.i%4 == 0){
+			this.sx += 100;
+		}
+	}
+}
+
 

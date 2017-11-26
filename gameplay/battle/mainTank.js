@@ -54,7 +54,7 @@ class MainTank{
 			x1: (this.position.x + 430) * this.resizeRatio,
 			y1: (this.position.y + 635) * this.resizeRatio,
 			collides: (x, y) => {
-				return (x >= this.driverRoom.x0 && y>=this.driverRoom.y0 && x<=this.driverRoom.x1 && y<=this.driverRoom.y1);
+				return (x >= this.driverRoom.x0 && y>=this.driverRoom.y0 && x<=this.driverRoom.x1 - 50 && y<=this.driverRoom.y1);
 			}
 		};
 		

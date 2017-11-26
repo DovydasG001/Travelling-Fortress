@@ -164,10 +164,13 @@ window.onload = () => {
   enemyTankSheet.src = '../../graphics/enemyShooting.png';
   var crosshair = new Image(300, 300);
   crosshair.src = '../../graphics/crosshair.gif';
+  var wrench = new Image (700, 100);
+  wrench.src = '../../graphics/wrench.png';
   var explosions = [];
   var lasers = [];
+  var wrenches = [];
   var imagesLoaded = 0;
-  var imageQuantity = 4;
+  var imageQuantity = 5;
   shootAnimation.onload = () => {
 		imagesLoaded++;
 		mainTank = new MainTank(canvas, ctx, shootAnimation);
@@ -190,6 +193,13 @@ window.onload = () => {
   }
 
   crosshair.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
+  
+  wrench.onload = () => {
 	imagesLoaded++;
   	if (imagesLoaded == imageQuantity){
   		startGame();
@@ -238,7 +248,6 @@ window.onload = () => {
 
 		//enemy shoot
 		if(progressFrames%110==0 && enemyTank.gunRoom.hp>0){
-			console.log(progressFrames)
 			let poweredDodging = 0;
 			if (mainTank.driverRoom.powered && mainTank.driverRoom.hp>0){
 				poweredDodging = 30;
@@ -255,16 +264,19 @@ window.onload = () => {
 				case 0:
 					if (enemyTank.driverRoom.hp < 3){
 						enemyTank.driverRoom.hp++;
+						wrenches.push(new Wrench(canvas, ctx, wrench,  enemyTank.driverRoom.x0 + (enemyTank.driverRoom.x1 -  enemyTank.driverRoom.x0)/2 - 50,  enemyTank.driverRoom.y0 + ( enemyTank.driverRoom.y1 -  enemyTank.driverRoom.y0)/2 - 80));
 					}
 					break;
 				case 1:
 					if (enemyTank.gunRoom.hp < 3){
 						enemyTank.gunRoom.hp++;
+						wrenches.push(new Wrench(canvas, ctx, wrench,   enemyTank.gunRoom.x0 + ( enemyTank.gunRoom.x1 -  enemyTank.gunRoom.x0)/2 - 57,    enemyTank.gunRoom.y0 + ( enemyTank.gunRoom.y1 -  enemyTank.gunRoom.y0)/2 - 30));
 					}
 					break;
 				case 2:
 					if (enemyTank.engineRoom.hp < 3){
 						enemyTank.engineRoom.hp++;
+						wrenches.push(new Wrench(canvas, ctx, wrench,  enemyTank.engineRoom.x0 + ( enemyTank.engineRoom.x1 - enemyTank.engineRoom.x0)/2+90, enemyTank.engineRoom.y0 + (enemyTank.engineRoom.y1 - enemyTank.engineRoom.y0)/2 + 70));
 					}
 					break;
 				default:
@@ -278,16 +290,19 @@ window.onload = () => {
 					case 0:
 						if (mainTank.driverRoom.hp < 3){
 							mainTank.driverRoom.hp++;
+							wrenches.push(new Wrench(canvas, ctx, wrench,  mainTank.driverRoom.x0 + (mainTank.driverRoom.x1 - mainTank.driverRoom.x0)/2 - 40, mainTank.driverRoom.y0 + (mainTank.driverRoom.y1 - mainTank.driverRoom.y0)/2 - 10));
 						}
 						break;
 					case 1:
 						if (mainTank.gunRoom.hp < 3){
 							mainTank.gunRoom.hp++;
+							wrenches.push(new Wrench(canvas, ctx, wrench,  mainTank.gunRoom.x0 + (mainTank.gunRoom.x1 - mainTank.gunRoom.x0)/2 - 60,   mainTank.gunRoom.y0 + (mainTank.gunRoom.y1 - mainTank.gunRoom.y0)/2 + 20));
 						}
 						break;
 					case 2:
 						if (mainTank.engineRoom.hp < 3){
 							mainTank.engineRoom.hp++;
+							wrenches.push(new Wrench(canvas, ctx, wrench, mainTank.engineRoom.x0 + (mainTank.engineRoom.x1 - mainTank.engineRoom.x0)/2-100, mainTank.engineRoom.y0 + (mainTank.engineRoom.y1 - mainTank.engineRoom.y0)/2));
 						}
 						break;
 					default:
@@ -325,6 +340,7 @@ window.onload = () => {
 				if (enemyTank.engineRoom.hp > 0){
 					enemyTank.engineRoom.hp--;
 				}
+				
 				explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 				lasers.splice(i, 1);
 			} else if(mainTank.gunRoom.collides(lasers[i].lineEnd.x, lasers[i].lineEnd.y)){  //check player
@@ -355,11 +371,19 @@ window.onload = () => {
 				lasers.splice(i, 1);
 			} 
 		}
-		//draw exsplosions
+		//draw explosions
 		for(var i in explosions){
 			explosions[i].drawExplosion();
 			if (explosions[i].i >= 36){
 				explosions.splice(i, 1);
+			}
+		}
+		
+		//draw wrenches
+		for(var i in wrenches){
+			wrenches[i].drawWrench();
+			if (wrenches[i].i >= 28){
+				wrenches.splice(i, 1);
 			}
 		}
 

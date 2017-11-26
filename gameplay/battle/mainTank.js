@@ -1,9 +1,12 @@
 class MainTank{
-	constructor(canvas,ctx, shootAnimation){
+	constructor(canvas,ctx, shootAnimation, explosions){
 		this.canvas = canvas;
 		this.ctx = ctx;
 		this.sx = 0;
+		this.expSx=14 * 569;
 		this.i = 0;
+		this.gunRoomExplodes = false;
+		this.explosions = explosions;
 		this.shootAnimation = shootAnimation;
 		this.shoot = false;
 		this.resizeRatio = 0.75;
@@ -72,7 +75,9 @@ class MainTank{
 	}
 
 	drawTank(){
-		if (this.shoot){
+		if (this.gunRoom.hp ==0){
+			this.ctx.drawImage(this.explosions, 22 * 569, 0, 569, 658, this.position.x, this.position.y, 569 * this.resizeRatio, 658 * this.resizeRatio);
+		} else if (this.shoot){
 			if( this.i == 32){
 				this.i = 0;
 				this.sx = 0;
@@ -87,6 +92,21 @@ class MainTank{
 
 		} else {
 			this.ctx.drawImage(this.shootAnimation, 0, 0, 569, 658, this.position.x, this.position.y, 569 * this.resizeRatio, 658 * this.resizeRatio);
+		}
+	}
+	
+	drawGunroomExplosion(){
+		if (this.gunRoomExplodes){
+			if( this.i == 32){
+					this.i = 0;
+					this.expSx = 14 * 569;
+					this.gunRoomExplodes = false;
+			}
+			this.ctx.drawImage(this.explosions, this.expSx, 0, 569, 658, this.position.x, this.position.y, 569 * this.resizeRatio, 658 * this.resizeRatio);
+			this.i++;
+			if( this.i%4 == 0){
+				this.expSx += 569;
+			}
 		}
 	}
 

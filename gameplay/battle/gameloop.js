@@ -167,6 +167,8 @@ window.onload = () => {
   wrench.src = '../../graphics/wrench.png';
   var background = new Image (1024, 768);
   background.src = '../../graphics/ruinedCityBackground.png';
+  var mainTankExplosions = new Image(25605, 658);
+  mainTankExplosions.src = '../../graphics/mainTankExplosion2.png';
   
   // Power bar images
   var engineImg = new Image(30, 30);
@@ -193,7 +195,7 @@ window.onload = () => {
   var lasers = [];
   var wrenches = [];
   var imagesLoaded = 0;
-  var imageQuantity = 10;
+  var imageQuantity = 11;
   var powerBar;
 
   weaponLoadImg.onload = () => {
@@ -261,9 +263,16 @@ window.onload = () => {
   		startGame();
   	}
   }
+  
+  mainTankExplosions.onload = () => {
+	imagesLoaded++;
+  	if (imagesLoaded == imageQuantity){
+  		startGame();
+  	}
+  }
 
 	var startGame = () => {
-		mainTank = new MainTank(canvas, ctx, shootAnimation);
+		mainTank = new MainTank(canvas, ctx, shootAnimation, mainTankExplosions);
 		enemyTank = new EnemyTank(canvas, ctx, enemyTankSheet, background);
 		powerBar = new PowerBar(canvas, ctx, engineImg, weaponImg, driverImg);
 		addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers, enemyTank, powerBar);
@@ -275,6 +284,7 @@ window.onload = () => {
 
 		// draw tank
 		mainTank.drawTank();
+		mainTank.drawGunroomExplosion();
 		
 		//draw lasers near player
 		for(var i in lasers){
@@ -291,6 +301,9 @@ window.onload = () => {
 					hitpointsGUI.hitCount++;
 					if (mainTank.gunRoom.hp > 0){
 						mainTank.gunRoom.hp--;
+						if(mainTank.gunRoom.hp == 0){
+							mainTank.gunRoomExplodes = true;
+						}
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					lasers.splice(i, 1);
@@ -337,7 +350,7 @@ window.onload = () => {
 			if (mainTank.driverRoom.powered && mainTank.driverRoom.hp>0){
 				poweredDodging = 8;
 			}
-			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 17+poweredDodging, 180, true, "enemyTank"));
+			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 0+poweredDodging, 183, true, "enemyTank"));
 			enemyTank.shoot = true;
 			var cannonSound = new Audio('../../music/Cannon+3.mp3');
 			cannonSound.volume = 0.2;

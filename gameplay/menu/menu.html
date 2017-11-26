@@ -14,7 +14,7 @@
 <div style="z-index: 10">
 	<button style="position:absolute;left:45%;top:20%" onclick="window.location.href='../battle/battle.html'">Start New Game</button></a><br>
 	<button style="position:absolute;left:45%;top:25%" disabled onclick="window.location.href='../play/game.html'">Continue</button><br>
-	<button style="position:absolute;left:45%;top:30%" disabled onclick="window.location.href='../options/options.html'">Options</button>													
+	<button style="position:absolute;left:45%;top:30%" disabled onclick="window.location.href='../options/options.html'">Options</button>
 </div>
 
 <script src="../battle/mainTank.js"></script>
@@ -33,6 +33,11 @@
 	enemyTankSheet.onload = () => {
 		enemyTank = new EnemyTank(canvas, ctx, enemyTankSheet);
 	}
+
+  var menuMusic = new Audio('../../Ambient Post-Apocalyptic.mp3');
+  menuMusic.loop = true;
+  menuMusic.volume = 1;
+  menuMusic.play();
 </script>
 </body>
 

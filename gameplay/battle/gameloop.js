@@ -265,18 +265,24 @@ window.onload = () => {
 					if (enemyTank.driverRoom.hp < 3){
 						enemyTank.driverRoom.hp++;
 						wrenches.push(new Wrench(canvas, ctx, wrench,  enemyTank.driverRoom.x0 + (enemyTank.driverRoom.x1 -  enemyTank.driverRoom.x0)/2 - 50,  enemyTank.driverRoom.y0 + ( enemyTank.driverRoom.y1 -  enemyTank.driverRoom.y0)/2 - 80));
+						var fixSound = new Audio('../../music/Impact-wrench.mp3')
+						fixSound.play();
 					}
 					break;
 				case 1:
 					if (enemyTank.gunRoom.hp < 3){
 						enemyTank.gunRoom.hp++;
 						wrenches.push(new Wrench(canvas, ctx, wrench,   enemyTank.gunRoom.x0 + ( enemyTank.gunRoom.x1 -  enemyTank.gunRoom.x0)/2 - 57,    enemyTank.gunRoom.y0 + ( enemyTank.gunRoom.y1 -  enemyTank.gunRoom.y0)/2 - 30));
+						var fixSound = new Audio('../../music/Impact-wrench.mp3')
+						fixSound.play();
 					}
 					break;
 				case 2:
 					if (enemyTank.engineRoom.hp < 3){
 						enemyTank.engineRoom.hp++;
 						wrenches.push(new Wrench(canvas, ctx, wrench,  enemyTank.engineRoom.x0 + ( enemyTank.engineRoom.x1 - enemyTank.engineRoom.x0)/2+90, enemyTank.engineRoom.y0 + (enemyTank.engineRoom.y1 - enemyTank.engineRoom.y0)/2 + 70));
+						var fixSound = new Audio('../../music/Impact-wrench.mp3')
+						fixSound.play();
 					}
 					break;
 				default:
@@ -291,18 +297,24 @@ window.onload = () => {
 						if (mainTank.driverRoom.hp < 3){
 							mainTank.driverRoom.hp++;
 							wrenches.push(new Wrench(canvas, ctx, wrench,  mainTank.driverRoom.x0 + (mainTank.driverRoom.x1 - mainTank.driverRoom.x0)/2 - 40, mainTank.driverRoom.y0 + (mainTank.driverRoom.y1 - mainTank.driverRoom.y0)/2 - 10));
+							var fixSound = new Audio('../../music/Impact-wrench.mp3')
+							fixSound.play();
 						}
 						break;
 					case 1:
 						if (mainTank.gunRoom.hp < 3){
 							mainTank.gunRoom.hp++;
 							wrenches.push(new Wrench(canvas, ctx, wrench,  mainTank.gunRoom.x0 + (mainTank.gunRoom.x1 - mainTank.gunRoom.x0)/2 - 60,   mainTank.gunRoom.y0 + (mainTank.gunRoom.y1 - mainTank.gunRoom.y0)/2 + 20));
+							var fixSound = new Audio('../../music/Impact-wrench.mp3')
+							fixSound.play();
 						}
 						break;
 					case 2:
 						if (mainTank.engineRoom.hp < 3){
 							mainTank.engineRoom.hp++;
 							wrenches.push(new Wrench(canvas, ctx, wrench, mainTank.engineRoom.x0 + (mainTank.engineRoom.x1 - mainTank.engineRoom.x0)/2-100, mainTank.engineRoom.y0 + (mainTank.engineRoom.y1 - mainTank.engineRoom.y0)/2));
+							var fixSound = new Audio('../../music/Impact-wrench.mp3')
+							fixSound.play();
 						}
 						break;
 					default:

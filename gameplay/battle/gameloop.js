@@ -119,6 +119,7 @@ function addControllers(canvas, ctx, hitpointsGUI, weaponsGUI, mainTank, lasers,
         lasers.push(new Laser(canvas, ctx, mainTank.gunPosition.x, mainTank.gunPosition.y, mainTank.target[mainTank.currentTarget].angle, mainTank.target[mainTank.currentTarget].rotation));
 		    mainTank.shoot = true;
 			var cannonSound = new Audio('../../music/Cannon+3.mp3')
+			cannonSound.volume = 0.2;
 		    cannonSound.play();
         weaponsSelected = false;
         weaponsGUI.isWeaponActive = false;
@@ -254,7 +255,8 @@ window.onload = () => {
 			}
 			lasers.push(new Laser(canvas, ctx, enemyTank.gunPosition.x + 50, enemyTank.gunPosition.y, 100+poweredDodging, 180));
 			enemyTank.shoot = true;
-			var cannonSound = new Audio('../../music/Cannon+3.mp3')
+			var cannonSound = new Audio('../../music/Cannon+3.mp3');
+			cannonSound.volume = 0.2;
 			cannonSound.play();
 		}
 		if(progressFrames%660==0 && enemyTank.engineRoom.hp>0){
@@ -266,6 +268,7 @@ window.onload = () => {
 						enemyTank.driverRoom.hp++;
 						wrenches.push(new Wrench(canvas, ctx, wrench,  enemyTank.driverRoom.x0 + (enemyTank.driverRoom.x1 -  enemyTank.driverRoom.x0)/2 - 50,  enemyTank.driverRoom.y0 + ( enemyTank.driverRoom.y1 -  enemyTank.driverRoom.y0)/2 - 80));
 						var fixSound = new Audio('../../music/Impact-wrench.mp3')
+						fixSound.volume = 0.2;
 						fixSound.play();
 					}
 					break;
@@ -274,6 +277,7 @@ window.onload = () => {
 						enemyTank.gunRoom.hp++;
 						wrenches.push(new Wrench(canvas, ctx, wrench,   enemyTank.gunRoom.x0 + ( enemyTank.gunRoom.x1 -  enemyTank.gunRoom.x0)/2 - 57,    enemyTank.gunRoom.y0 + ( enemyTank.gunRoom.y1 -  enemyTank.gunRoom.y0)/2 - 30));
 						var fixSound = new Audio('../../music/Impact-wrench.mp3')
+						fixSound.volume = 0.2;
 						fixSound.play();
 					}
 					break;

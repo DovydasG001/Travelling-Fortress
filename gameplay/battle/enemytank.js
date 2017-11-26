@@ -75,6 +75,7 @@ class EnemyTank{
 	}
 
 	drawTank(){
+		//this.ctx.drawImage(this.shootAnimation, this.sx, 0, 450, 430, this.position.x, this.position.y, 450, 430);
 		if (this.shoot){
 			if( this.i == 40){
 				this.i = 0;

@@ -41,8 +41,10 @@ class wpGUI {
   setInactive() {
     this.ctx.fillStyle = 'red';
     this.ctx.fillRect(this.weaponsPosition.x0, this.weaponsPosition.y0, 120, 60);
+    this.ctx.globalAlpha = 0.2;
     this.ctx.fillStyle = 'yellow';
     this.ctx.fillRect(this.weaponsPosition.x0, this.weaponsPosition.y0 + 60 - (this.loadingBar*60), 120, (this.loadingBar*60));
+    this.ctx.globalAlpha = 1;
   }
 
   setActive() {

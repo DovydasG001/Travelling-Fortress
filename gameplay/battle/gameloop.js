@@ -183,7 +183,7 @@ window.onload = () => {
   var weaponsGUI = new wpGUI(canvas, ctx, weaponLoadImg);
 
   //Player tank room explosions
-  
+
 
 
   var explosions = [];
@@ -258,7 +258,7 @@ window.onload = () => {
   		startGame();
   	}
   }
-  
+
   mainTankExplosions.onload = () => {
 	imagesLoaded++;
   	if (imagesLoaded == imageQuantity){
@@ -280,7 +280,7 @@ window.onload = () => {
 		// draw tank
 		mainTank.drawTank();
 		mainTank.drawGunroomExplosion();
-		
+
 		//draw lasers near player
 		for(var i in lasers){
 			//await lasers[i].drawLaser();
@@ -298,14 +298,14 @@ window.onload = () => {
 						mainTank.gunRoom.hp--;
 						if(mainTank.gunRoom.hp == 0){
 							mainTank.gunRoomExplodes = true;
-							let explosionSound = new Audio('../../explosion.mp3');
+							let explosionSound = new Audio('../../music/explosion.mp3');
 							explosionSound.volume = 0.2;
 							explosionSound.play();
 						}
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					// Explosion sounds
-					let explosionEffect = new Audio('../../impact.mp3');
+					let explosionEffect = new Audio('../../music/impact.mp3');
 					explosionEffect.volume = 0.2;
 					explosionEffect.play();
 					lasers.splice(i, 1);
@@ -321,7 +321,7 @@ window.onload = () => {
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					// Explosion sounds
-					let explosionEffect = new Audio('../../impact.mp3');
+					let explosionEffect = new Audio('../../music/impact.mp3');
 					explosionEffect.volume = 0.2;
 					explosionEffect.play();
 					lasers.splice(i, 1);
@@ -332,7 +332,7 @@ window.onload = () => {
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					// Explosion sounds
-					let explosionEffect = new Audio('../../impact.mp3');
+					let explosionEffect = new Audio('../../music/impact.mp3');
 					explosionEffect.volume = 0.2;
 					explosionEffect.play();
 					lasers.splice(i, 1);
@@ -450,7 +450,7 @@ window.onload = () => {
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					// Explosion sounds
-					let explosionEffect = new Audio('../../impact.mp3');
+					let explosionEffect = new Audio('../../music/impact.mp3');
 					explosionEffect.volume = 0.2;
 					explosionEffect.play();
 					lasers.splice(i, 1);
@@ -466,7 +466,7 @@ window.onload = () => {
 					}
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					// Explosion sounds
-					let explosionEffect = new Audio('../../impact.mp3');
+					let explosionEffect = new Audio('../../music/impact.mp3');
 					explosionEffect.volume = 0.2;
 					explosionEffect.play();
 					lasers.splice(i, 1);
@@ -478,7 +478,7 @@ window.onload = () => {
 
 					explosions.push(new Explosion(canvas, ctx, explosionAnimation, lasers[i].lineEnd.x, lasers[i].lineEnd.y));
 					// Explosion sounds
-					let explosionEffect = new Audio('../../impact.mp3');
+					let explosionEffect = new Audio('../../music/impact.mp3');
 					explosionEffect.volume = 0.2;
 					explosionEffect.play();
 					lasers.splice(i, 1);
